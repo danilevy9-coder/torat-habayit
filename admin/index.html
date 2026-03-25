@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login – Torat Habayit</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    body {
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .login-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 3rem 3rem 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-logo .logo-main { font-size: 1.5rem; color: var(--navy); }
+    .login-logo .logo-sub  { color: var(--gold); }
+    .login-logo p { color: var(--gray-400); font-size: 0.85rem; margin-top: 0.5rem; }
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 0.25rem;
+    }
+    .login-sub { color: var(--gray-400); font-size: 0.85rem; margin-bottom: 2rem; }
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+    }
+    .login-btn:hover { background: var(--navy-light); transform: translateY(-1px); }
+    .error-msg {
+      background: #FEE2E2;
+      color: #DC2626;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      margin-top: 1.5rem;
+    }
+    .hint a { color: var(--navy); }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-main" style="font-family:'Playfair Display',serif; font-weight:700;">Torat Habayit</div>
+      <div class="logo-sub" style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; font-family:'Inter',sans-serif;">INSTITUTE</div>
+      <p>Content Management</p>
+    </div>
+    <h2 class="login-title">Admin Login</h2>
+    <p class="login-sub">Enter your password to access the dashboard</p>
+
+    <div class="error-msg" id="error-msg">Incorrect password. Please try again.</div>
+
+    <form onsubmit="doLogin(event)">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter admin password" autofocus required>
+      </div>
+      <button type="submit" class="login-btn">Log In →</button>
+    </form>
+
+    <p class="hint">
+      <a href="../index.html">← Back to website</a>
+    </p>
+    <p class="hint" style="margin-top:0.5rem; opacity:0.7;">Default password: <strong>ToratHabayit2024</strong><br>Change this in admin/index.html</p>
+  </div>
+
+<script>
+// ── Simple client-side admin auth ──
+// Change the password below to your own secure password
+const ADMIN_PASSWORD = 'ToratHabayit2024';
+
+function doLogin(e) {
+  e.preventDefault();
+  const pw = document.getElementById('password').value;
+  const err = document.getElementById('error-msg');
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('th_admin', '1');
+    window.location.href = 'dashboard.html';
+  } else {
+    err.style.display = 'block';
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+}
+
+// If already logged in, go to dashboard
+if (sessionStorage.getItem('th_admin') === '1') {
+  window.location.href = 'dashboard.html';
+}
+</script>
+</body>
+</html>

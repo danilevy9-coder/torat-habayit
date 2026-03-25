@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us – Torat Habayit Institute</title>
+  <meta name="description" content="Contact the Torat Habayit Institute for halachic consultations, seminar bookings, and general inquiries.">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .contact-info-card {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      height: 100%;
+    }
+    .contact-info-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      align-items: flex-start;
+    }
+    .contact-info-icon {
+      width: 44px; height: 44px;
+      background: rgba(197,160,89,0.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-info-text h4 { color: var(--gold); font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .contact-info-text p, .contact-info-text a { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.6; }
+    .contact-info-text a:hover { color: var(--gold); }
+    .form-container {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .submit-btn {
+      background: var(--navy);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(10,25,47,0.3); }
+  </style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<!-- ─── Hero ─── -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Reach Us</span>
+    <h1>Get in Touch</h1>
+    <div class="gold-divider" style="margin:1rem 0;"></div>
+    <p>Whether you have a halachic question, want to book a seminar, or simply want to learn more — we're here for you.</p>
+  </div>
+</section>
+
+<!-- ─── Contact Main ─── -->
+<section class="section section-white">
+  <div class="container">
+    <div class="grid-2" style="gap:3.5rem; align-items:start;">
+
+      <!-- Left: Info -->
+      <div class="contact-info-card">
+        <h2 style="color:var(--white); margin-bottom:0.5rem; font-size:1.6rem;">Contact Information</h2>
+        <p style="color:rgba(255,255,255,0.55); margin-bottom:2.5rem; font-size:0.9rem;">Reach us directly — all inquiries are responded to with care.</p>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📍</div>
+          <div class="contact-info-text">
+            <h4>Office Address</h4>
+            <p>Rechov Haran 3/3<br>Jerusalem 9246603, Israel</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📞</div>
+          <div class="contact-info-text">
+            <h4>Israel Phone</h4>
+            <a href="tel:026504650">02-650-4-650</a>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📞</div>
+          <div class="contact-info-text">
+            <h4>USA Phone</h4>
+            <a href="tel:+17187040985">+1-718-704-0985</a>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">✉️</div>
+          <div class="contact-info-text">
+            <h4>Email</h4>
+            <a href="mailto:info@torathabayit.com">info@torathabayit.com</a>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:1.5rem; padding-top:1.75rem;">
+          <h3 style="color:var(--gold); font-size:1rem; margin-bottom:1rem;">Office Hours</h3>
+          <div style="display:grid; gap:0.5rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
+              <span style="color:rgba(255,255,255,0.6);">Sunday – Thursday</span>
+              <span style="color:var(--white);">9:00 AM – 5:00 PM (Israel time)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
+              <span style="color:rgba(255,255,255,0.6);">Friday</span>
+              <span style="color:var(--white);">9:00 AM – 1:00 PM</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
+              <span style="color:rgba(255,255,255,0.6);">Shabbat</span>
+              <span style="color:rgba(255,255,255,0.4);">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="form-container">
+        <h2 style="color:var(--navy); margin-bottom:0.5rem; font-size:1.6rem;">Send Us a Message</h2>
+        <p style="color:var(--gray-600); margin-bottom:2rem; font-size:0.9rem;">We typically respond within 1–2 business days.</p>
+
+        <form id="contact-form" onsubmit="submitContactForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" class="form-control" placeholder="Yosef" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Cohen" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" class="form-control" placeholder="yosef@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" class="form-control" placeholder="+1-555-000-0000">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reason">Reason for Inquiry *</label>
+            <select id="reason" class="form-control" required>
+              <option value="" disabled selected>— Please select —</option>
+              <option value="consultation">Medical-Halachic Consultation</option>
+              <option value="seminar">Book a Lecture / Seminar</option>
+              <option value="publication">Publication Order</option>
+              <option value="donation">Donation Inquiry</option>
+              <option value="media">Media / Press</option>
+              <option value="general">General Inquiry</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" class="form-control" placeholder="Please describe your inquiry..." required></textarea>
+          </div>
+
+          <div class="privacy-note">
+            🔒 <strong>Your privacy is our priority.</strong> All medical-halachic consultations are handled with the highest level of confidentiality. Your information will never be shared with third parties.
+          </div>
+
+          <button type="submit" class="submit-btn">Send Message →</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Map Section ─── -->
+<section class="section section-gray" style="padding:60px 0;">
+  <div class="container">
+    <div style="background:var(--navy); border-radius:var(--radius-lg); padding:3rem; text-align:center;">
+      <span class="eyebrow">Location</span>
+      <h3 style="color:var(--white); margin:0.5rem 0 0.5rem;">Jerusalem, Israel</h3>
+      <p style="color:rgba(255,255,255,0.6); margin-bottom:1.5rem;">Rechov Haran 3/3, Jerusalem 9246603</p>
+      <a href="https://maps.google.com/?q=Rechov+Haran+3+Jerusalem+Israel" target="_blank" class="btn btn-gold">
+        📍 Open in Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script>
+function submitContactForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.submit-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    showToast('Thank you! Your message has been sent. We\'ll be in touch soon.');
+    e.target.reset();
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+  }, 1200);
+}
+</script>
+</body>
+</html>

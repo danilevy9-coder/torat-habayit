@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses &amp; Training – Torat Habayit Institute</title>
+  <meta name="description" content="Professional training and educational seminars in Medical Halacha for Rabbis, Doctors, and the public.">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .portal-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+    .portal-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .portal-header {
+      background: var(--navy);
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .portal-header.gold { background: var(--gold); }
+    .portal-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .portal-header h3 { color: var(--white); font-size: 1.4rem; }
+    .portal-header.gold h3 { color: var(--navy); }
+    .portal-header p { color: rgba(255,255,255,0.75); font-size:0.88rem; margin-top:0.5rem; }
+    .portal-header.gold p { color: rgba(10,25,47,0.75); }
+    .portal-body { padding: 2rem; }
+    .topic-list { margin: 1rem 0; }
+    .topic-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.88rem;
+      color: var(--gray-600);
+    }
+    .topic-list li:last-child { border-bottom: none; }
+    .topic-list li::before { content: '✦'; color: var(--gold); font-size: 0.7rem; margin-top: 0.25rem; flex-shrink: 0; }
+    .curriculum-row {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .curriculum-row:hover { border-color: var(--gold); background: rgba(197,160,89,0.02); }
+    .curriculum-num {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .curriculum-row h4 { font-size: 0.95rem; color: var(--navy); margin-bottom: 0.15rem; }
+    .curriculum-row span { font-size: 0.8rem; color: var(--gray-400); }
+  </style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<!-- ─── Hero ─── -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Education</span>
+    <h1>Professional Training &amp; Education</h1>
+    <div class="gold-divider" style="margin:1rem 0;"></div>
+    <p>Specialized Medical-Halachic education for Rabbinic authorities, healthcare professionals, and the wider community.</p>
+  </div>
+</section>
+
+<!-- ─── Portals ─── -->
+<section class="section section-gray">
+  <div class="container">
+    <div class="section-header centered">
+      <span class="eyebrow">Who This Is For</span>
+      <h2 style="color:var(--navy);">Audience Portals</h2>
+      <div class="gold-divider centered"></div>
+      <p>Each portal is tailored to the specific needs, vocabulary, and halachic context of its audience.</p>
+    </div>
+    <div class="grid-3">
+
+      <!-- Rabbis -->
+      <div class="portal-card fade-up">
+        <div class="portal-header">
+          <div class="portal-icon">⚖️</div>
+          <h3>For Rabbinic Leadership</h3>
+          <p>Deep halachic analysis and practical psak for Dayanim and Rabbanim</p>
+        </div>
+        <div class="portal-body">
+          <ul class="topic-list">
+            <li>Brain death & organ donation — comprehensive source material</li>
+            <li>Halachic definitions of life and the dying patient</li>
+            <li>Artificial nutrition & hydration (ANH) in halacha</li>
+            <li>Fertility treatments and assisted reproduction</li>
+            <li>End-of-life directives and advance care planning</li>
+            <li>Pikuach nefesh — the halachic framework in practice</li>
+          </ul>
+          <a href="image/haskampot/Lecture Series - Rabbis- 2026.pdf" target="_blank" class="btn btn-navy" style="width:100%; justify-content:center; margin-top:0.5rem;">
+            📄 Download Rabbinic Guide (PDF)
+          </a>
+        </div>
+      </div>
+
+      <!-- Doctors -->
+      <div class="portal-card fade-up">
+        <div class="portal-header gold">
+          <div class="portal-icon">🩺</div>
+          <h3>For Medical Professionals</h3>
+          <p>Clinical ethics through a halachic lens for doctors and nurses</p>
+        </div>
+        <div class="portal-body">
+          <ul class="topic-list">
+            <li>Navigating Shabbat and Yom Tov in clinical settings</li>
+            <li>Religious sensitivities in patient care and communication</li>
+            <li>Brain death protocols — the halachic considerations</li>
+            <li>Informed consent and Jewish ethics</li>
+            <li>End-of-life care: palliative vs. curative obligations</li>
+            <li>Mental health care within Jewish law</li>
+          </ul>
+          <a href="image/haskampot/Lecture Series - Doctors - 2026.pdf" target="_blank" class="btn btn-navy" style="width:100%; justify-content:center; margin-top:0.5rem;">
+            📄 Download Medical Protocol (PDF)
+          </a>
+        </div>
+      </div>
+
+      <!-- Public -->
+      <div class="portal-card fade-up">
+        <div class="portal-header">
+          <div class="portal-icon">🏠</div>
+          <h3>For Families &amp; Community</h3>
+          <p>Accessible guidance for navigating medical decisions with Torah values</p>
+        </div>
+        <div class="portal-body">
+          <ul class="topic-list">
+            <li>What to do when a family member is critically ill</li>
+            <li>Shabbat and hospital visits — practical guidance</li>
+            <li>Fertility challenges and halachic options</li>
+            <li>Medications on fast days — what is permitted</li>
+            <li>Advance directives and halachic wills</li>
+            <li>Understanding organ donation from a Torah perspective</li>
+          </ul>
+          <a href="image/haskampot/Lecture Series - Public - 2026.pdf" target="_blank" class="btn btn-navy" style="width:100%; justify-content:center; margin-top:0.5rem;">
+            📄 Download Family Resource (PDF)
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Curriculum Overview ─── -->
+<section class="section section-white">
+  <div class="container">
+    <div class="grid-2" style="gap:4rem; align-items:start;">
+      <div>
+        <span class="eyebrow">Curriculum</span>
+        <h2 style="color:var(--navy); margin:0.75rem 0 0.5rem;">Core Lecture Series 2026</h2>
+        <div class="gold-divider" style="margin-bottom:1.5rem;"></div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">01</div>
+          <div><h4>Introduction to Medical Halacha</h4><span>Foundations — 3 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">02</div>
+          <div><h4>Brain Death &amp; Organ Donation</h4><span>Advanced — 4 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">03</div>
+          <div><h4>End-of-Life: Nutrition &amp; Hydration</h4><span>Advanced — 3 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">04</div>
+          <div><h4>Fertility &amp; Assisted Reproduction</h4><span>Intermediate — 4 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">05</div>
+          <div><h4>Shabbat &amp; Yom Tov in Medicine</h4><span>Practical — 3 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">06</div>
+          <div><h4>Genetics, Genomics &amp; Halacha</h4><span>Advanced — 3 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">07</div>
+          <div><h4>Mental Health &amp; Jewish Law</h4><span>Intermediate — 2 sessions</span></div>
+        </div>
+        <div class="curriculum-row">
+          <div class="curriculum-num">08</div>
+          <div><h4>Child Protection in Halacha</h4><span>Practical — 2 sessions</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Recent Seminars</span>
+        <h2 style="color:var(--navy); margin:0.75rem 0 0.5rem;">Where We've Taught</h2>
+        <div class="gold-divider" style="margin-bottom:1.5rem;"></div>
+        <div style="display:grid; gap:1rem;">
+          ${[
+            { city: 'Jerusalem', venue: 'Shaare Zedek Medical Center', topic: 'Embryo Development & Halacha' },
+            { city: 'Brooklyn, NY', venue: 'Ateret Torah Kollel', topic: 'Brain Death & Organ Donation' },
+            { city: 'Los Angeles', venue: 'Chazak Organization', topic: 'Vaccination & Jewish Law' },
+            { city: 'Miami', venue: 'Community Seminar', topic: 'Genetics & Child Protection' },
+            { city: 'Manchester, UK', venue: 'Manchester Jewish Community', topic: 'Genetics in Halacha' },
+            { city: 'London, UK', venue: 'St. John\'s Wood Shul', topic: 'Medical Halacha Series' },
+            { city: 'Ramat Gan', venue: 'Regional Conference', topic: 'Multi-disciplinary Seminar' },
+          ].map(s => `
+          <div style="display:flex; gap:1rem; align-items:start; padding:0.85rem; background:var(--gray-soft); border-radius:8px; border:1px solid var(--gray-200);">
+            <span style="font-size:1.2rem;">📍</span>
+            <div>
+              <div style="font-weight:600; color:var(--navy); font-size:0.9rem;">${s.city} — ${s.venue}</div>
+              <div style="font-size:0.82rem; color:var(--gray-600); margin-top:0.2rem;">${s.topic}</div>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Seminar Booking ─── -->
+<section class="section section-navy">
+  <div class="container">
+    <div style="max-width:700px; margin:0 auto; text-align:center;">
+      <span class="eyebrow">Book a Seminar</span>
+      <h2 style="color:var(--white); margin:0.75rem 0 1rem;">Request a Custom Seminar</h2>
+      <div class="gold-divider centered" style="margin-bottom:1.25rem;"></div>
+      <p style="color:rgba(255,255,255,0.75); font-size:1.05rem; margin-bottom:2rem;">We deliver specialized training for medical institutions, hospitals, Rabbinic bodies, and community organizations globally. Each seminar is tailored to the specific needs and level of your audience.</p>
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-gold">Inquire Now →</a>
+        <a href="resources.html" class="btn btn-outline">Browse Resources</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Gallery Teaser ─── -->
+<section class="section section-gray">
+  <div class="container">
+    <div class="section-header centered">
+      <span class="eyebrow">In Action</span>
+      <h2 style="color:var(--navy);">Seminar Highlights</h2>
+      <div class="gold-divider centered"></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem;">
+      <div style="border-radius:var(--radius); overflow:hidden; height:220px;">
+        <img src="images/home/Ramat Gan Conference.jpeg" alt="Conference" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div style="border-radius:var(--radius); overflow:hidden; height:220px;">
+        <img src="images/home/Ateret Torah Kolel - Brooklyn.jpeg" alt="Brooklyn" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div style="border-radius:var(--radius); overflow:hidden; height:220px;">
+        <img src="images/home/Examining Embryo Development - Shaare Zedek.jpg" alt="Shaare Zedek" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="gallery.html" class="btn btn-navy">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

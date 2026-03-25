@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – Torat Habayit</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    body { background: var(--gray-soft); margin: 0; }
+    .stat-mini {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .stat-mini .label { font-size: 0.78rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .stat-mini .value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--navy); }
+    .stat-mini .sub { font-size: 0.8rem; color: var(--gray-400); margin-top: 0.2rem; }
+    #editor-panel {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      display: none;
+    }
+    .editor-toolbar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      padding: 0.6rem;
+      background: var(--gray-soft);
+      border-radius: 6px 6px 0 0;
+      border: 1px solid var(--gray-200);
+      border-bottom: none;
+    }
+    .toolbar-btn {
+      padding: 0.3rem 0.7rem;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .toolbar-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    #content-editor {
+      width: 100%;
+      min-height: 280px;
+      padding: 1rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 0 0 6px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      outline: none;
+      box-sizing: border-box;
+    }
+    #content-editor:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(197,160,89,0.15); }
+    .delete-confirm {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .delete-confirm-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: var(--shadow-lg);
+    }
+  </style>
+</head>
+<body class="admin-layout">
+
+<!-- Sidebar -->
+<aside class="admin-sidebar">
+  <a href="../index.html" class="logo" style="display:block; margin-bottom:1rem;">
+    <span class="logo-main">Torat Habayit</span>
+    <span class="logo-sub">Institute</span>
+  </a>
+  <p style="color:rgba(255,255,255,0.4); font-size:0.75rem; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.1em;">Admin Panel</p>
+  <nav class="admin-nav">
+    <a href="dashboard.html" class="active">📊 Dashboard</a>
+    <a href="../blog.html"     target="_blank">📖 View Blog</a>
+    <a href="../index.html"    target="_blank">🌐 View Site</a>
+    <a href="#" onclick="doLogout()">🚪 Log Out</a>
+  </nav>
+  <div style="position:absolute; bottom:1.5rem; left:1.5rem; right:1.5rem;">
+    <div style="background:rgba(197,160,89,0.1); border:1px solid rgba(197,160,89,0.2); border-radius:8px; padding:0.85rem; font-size:0.78rem; color:rgba(255,255,255,0.5); line-height:1.5;">
+      Posts are saved in your browser's local storage. Use the <strong style="color:rgba(255,255,255,0.7);">Export</strong> button to back up your content.
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="admin-main">
+
+  <!-- Top Bar -->
+  <div class="admin-topbar">
+    <h1>Blog Dashboard</h1>
+    <div style="display:flex; gap:0.75rem;">
+      <button class="btn btn-outline-gold btn-sm" onclick="exportPosts()">⬇ Export Posts</button>
+      <button class="btn btn-navy btn-sm" onclick="showEditor()">+ New Post</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem;" id="stats-row"></div>
+
+  <!-- Editor Panel -->
+  <div id="editor-panel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.4rem;" id="editor-title">New Post</h2>
+      <button onclick="hideEditor()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--gray-400);">✕</button>
+    </div>
+
+    <input type="hidden" id="editing-id" value="">
+
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Post Title *</label>
+        <input type="text" id="f-title" class="form-control" placeholder="e.g. Brain Death in Halacha" required>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Category</label>
+        <select id="f-cat" class="form-control">
+          <option>Halacha</option>
+          <option>Practical Halacha</option>
+          <option>Announcements</option>
+          <option>Research</option>
+          <option>General</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Author</label>
+        <input type="text" id="f-author" class="form-control" placeholder="Rabbi Yehuda Herzl Finchas" value="Torat Habayit Institute">
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Date</label>
+        <input type="date" id="f-date" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Featured Image URL (optional)</label>
+      <input type="text" id="f-image" class="form-control" placeholder="e.g. ../images/books/ANH Book.jpg">
+    </div>
+
+    <div class="form-group">
+      <label>Excerpt (shown in post listing)</label>
+      <textarea id="f-excerpt" class="form-control" style="min-height:70px;" placeholder="A brief 1-2 sentence summary of the article..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Content *</label>
+      <div class="editor-toolbar">
+        <button class="toolbar-btn" onclick="formatText('bold')" title="Bold"><b>B</b></button>
+        <button class="toolbar-btn" onclick="formatText('italic')" title="Italic"><i>I</i></button>
+        <button class="toolbar-btn" onclick="insertTag('h2')" title="Heading">H2</button>
+        <button class="toolbar-btn" onclick="insertTag('h3')" title="Sub-heading">H3</button>
+        <button class="toolbar-btn" onclick="insertTag('p')" title="Paragraph">¶</button>
+        <button class="toolbar-btn" onclick="insertBlockquote()" title="Quote">❝</button>
+        <button class="toolbar-btn" onclick="insertList()" title="List">≡</button>
+      </div>
+      <div id="content-editor" contenteditable="true" spellcheck="true"></div>
+    </div>
+
+    <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.5rem;">
+      <button class="btn btn-outline-gold btn-sm" onclick="savePost('draft')">Save as Draft</button>
+      <button class="btn btn-navy" onclick="savePost('published')">Publish Post →</button>
+    </div>
+  </div>
+
+  <!-- Posts Table -->
+  <div class="admin-card">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem;">
+      <h3 style="font-family:'Playfair Display',serif; color:var(--navy); font-size:1.1rem;">All Posts</h3>
+      <input type="text" placeholder="Search posts..." id="search-posts" class="form-control" style="max-width:250px; padding:0.5rem 0.85rem; font-size:0.85rem;">
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="posts-table" id="posts-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="posts-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- Delete Confirm Modal -->
+<div id="delete-modal" class="delete-confirm" style="display:none;">
+  <div class="delete-confirm-box">
+    <h3 style="color:var(--navy); font-family:'Playfair Display',serif; margin-bottom:0.75rem;">Delete Post?</h3>
+    <p style="color:var(--gray-600); font-size:0.9rem; margin-bottom:1.5rem;">This will permanently delete the post. This action cannot be undone.</p>
+    <div style="display:flex; gap:0.75rem;">
+      <button onclick="closeDeleteModal()" class="btn btn-outline-gold btn-sm">Cancel</button>
+      <button onclick="confirmDelete()" class="btn" style="background:#DC2626;color:white;border-radius:50px;padding:0.6rem 1.4rem;font-size:0.82rem;font-weight:600;">Delete Permanently</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/blog.js"></script>
+<script>
+// ── Auth check ──
+if (sessionStorage.getItem('th_admin') !== '1') {
+  window.location.href = 'index.html';
+}
+
+let pendingDeleteId = null;
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  renderStats();
+  renderTable();
+  document.getElementById('search-posts').addEventListener('input', () => renderTable());
+});
+
+function renderStats() {
+  const posts = BlogStore.getPosts();
+  const published = posts.filter(p => p.status === 'published').length;
+  const drafts = posts.filter(p => p.status === 'draft').length;
+  const cats = [...new Set(posts.map(p => p.category))].length;
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-mini"><div class="label">Total Posts</div><div class="value">${posts.length}</div></div>
+    <div class="stat-mini"><div class="label">Published</div><div class="value" style="color:var(--gold)">${published}</div></div>
+    <div class="stat-mini"><div class="label">Drafts</div><div class="value" style="color:#9CA3AF">${drafts}</div></div>
+    <div class="stat-mini"><div class="label">Categories</div><div class="value">${cats}</div></div>
+  `;
+}
+
+function renderTable(search = '') {
+  const query = document.getElementById('search-posts')?.value.toLowerCase() || '';
+  const posts = BlogStore.getPosts().filter(p =>
+    !query || p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
+  );
+  const tbody = document.getElementById('posts-tbody');
+  if (posts.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:2rem;">No posts yet. Click "New Post" to get started.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = posts.map(post => `
+    <tr>
+      <td>
+        <div style="font-weight:600;color:var(--navy);font-size:0.92rem;">${post.title}</div>
+        <div style="font-size:0.78rem;color:var(--gray-400);margin-top:2px;">${post.excerpt ? post.excerpt.slice(0,80)+'...' : ''}</div>
+      </td>
+      <td><span style="font-size:0.82rem;color:var(--gray-600);">${post.category}</span></td>
+      <td><span style="font-size:0.82rem;color:var(--gray-600);">${post.author}</span></td>
+      <td><span style="font-size:0.82rem;color:var(--gray-600);">${new Date(post.date).toLocaleDateString('en-GB')}</span></td>
+      <td><span class="status-pill ${post.status === 'published' ? 'status-published' : 'status-draft'}">${post.status}</span></td>
+      <td>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button class="action-btn action-edit" onclick="editPost('${post.id}')">✎ Edit</button>
+          ${post.status === 'draft'
+            ? `<button class="action-btn action-view" onclick="publishPost('${post.id}')">✓ Publish</button>`
+            : `<button class="action-btn" onclick="unpublishPost('${post.id}')" style="background:#FEF3C7;color:#92400E">↩ Unpublish</button>`}
+          <a href="../post.html?id=${post.id}" target="_blank" class="action-btn action-view" style="text-decoration:none;">👁 View</a>
+          <button class="action-btn action-delete" onclick="openDeleteModal('${post.id}')">✕ Delete</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ── Editor ──
+function showEditor(post = null) {
+  const panel = document.getElementById('editor-panel');
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  if (post) {
+    document.getElementById('editor-title').textContent = 'Edit Post';
+    document.getElementById('editing-id').value = post.id;
+    document.getElementById('f-title').value = post.title;
+    document.getElementById('f-cat').value = post.category;
+    document.getElementById('f-author').value = post.author;
+    document.getElementById('f-date').value = post.date;
+    document.getElementById('f-image').value = post.image || '';
+    document.getElementById('f-excerpt').value = post.excerpt || '';
+    document.getElementById('content-editor').innerHTML = post.content;
+  } else {
+    document.getElementById('editor-title').textContent = 'New Post';
+    document.getElementById('editing-id').value = '';
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-cat').value = 'Halacha';
+    document.getElementById('f-author').value = 'Torat Habayit Institute';
+    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('f-image').value = '';
+    document.getElementById('f-excerpt').value = '';
+    document.getElementById('content-editor').innerHTML = '';
+  }
+}
+
+function hideEditor() {
+  document.getElementById('editor-panel').style.display = 'none';
+}
+
+function savePost(status) {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('Please enter a post title.'); return; }
+
+  const content = document.getElementById('content-editor').innerHTML.trim();
+  if (!content) { alert('Please enter some content.'); return; }
+
+  const postData = {
+    title,
+    category: document.getElementById('f-cat').value,
+    author: document.getElementById('f-author').value,
+    date: document.getElementById('f-date').value,
+    image: document.getElementById('f-image').value,
+    excerpt: document.getElementById('f-excerpt').value,
+    content,
+    status,
+  };
+
+  const editingId = document.getElementById('editing-id').value;
+  if (editingId) {
+    BlogStore.updatePost(editingId, postData);
+    showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
+  } else {
+    BlogStore.createPost(postData);
+    showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
+  }
+
+  hideEditor();
+  renderStats();
+  renderTable();
+}
+
+function editPost(id) {
+  const post = BlogStore.getPost(id);
+  if (post) showEditor(post);
+}
+
+function publishPost(id) {
+  BlogStore.updatePost(id, { status: 'published' });
+  renderStats();
+  renderTable();
+  showToast('Post published!');
+}
+
+function unpublishPost(id) {
+  BlogStore.updatePost(id, { status: 'draft' });
+  renderStats();
+  renderTable();
+  showToast('Post moved to draft.');
+}
+
+function openDeleteModal(id) {
+  pendingDeleteId = id;
+  document.getElementById('delete-modal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  pendingDeleteId = null;
+  document.getElementById('delete-modal').style.display = 'none';
+}
+
+function confirmDelete() {
+  if (pendingDeleteId) {
+    BlogStore.deletePost(pendingDeleteId);
+    closeDeleteModal();
+    renderStats();
+    renderTable();
+    showToast('Post deleted.', 'error');
+  }
+}
+
+// ── Text formatting ──
+function formatText(cmd) {
+  document.getElementById('content-editor').focus();
+  document.execCommand(cmd, false, null);
+}
+
+function insertTag(tag) {
+  const editor = document.getElementById('content-editor');
+  editor.focus();
+  const sel = window.getSelection();
+  const text = sel.toString() || 'Your text here';
+  document.execCommand('insertHTML', false, `<${tag}>${text}</${tag}>`);
+}
+
+function insertBlockquote() {
+  const editor = document.getElementById('content-editor');
+  editor.focus();
+  const sel = window.getSelection();
+  const text = sel.toString() || 'Quote text here';
+  document.execCommand('insertHTML', false, `<blockquote>${text}</blockquote>`);
+}
+
+function insertList() {
+  document.getElementById('content-editor').focus();
+  document.execCommand('insertUnorderedList', false, null);
+}
+
+// ── Export ──
+function exportPosts() {
+  const posts = BlogStore.getPosts();
+  const json = JSON.stringify(posts, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `torathabayit-posts-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Posts exported successfully!');
+}
+
+function doLogout() {
+  sessionStorage.removeItem('th_admin');
+  window.location.href = 'index.html';
+}
+
+// Toast (local copy for admin page)
+function showToast(msg, type = 'success') {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position:fixed; bottom:2rem; right:2rem; z-index:10000;
+    background:${type === 'success' ? '#0A192F' : '#DC2626'};
+    color:#fff; padding:0.9rem 1.4rem; border-radius:10px;
+    font-size:0.9rem; font-weight:500; box-shadow:0 8px 30px rgba(0,0,0,0.2);
+    display:flex; align-items:center; gap:0.6rem;
+  `;
+  toast.innerHTML = `<span style="color:#C5A059">${type === 'success' ? '✓' : '✕'}</span> ${msg}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery – Torat Habayit Institute</title>
+  <meta name="description" content="A visual record of the Torat Habayit Institute's global seminars, outreach, and media appearances.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<!-- ─── Hero ─── -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Visual Archive</span>
+    <h1>Visualizing Our Impact</h1>
+    <div class="gold-divider" style="margin:1rem 0;"></div>
+    <p>A curated record of seminars, international outreach, media appearances, and community events.</p>
+  </div>
+</section>
+
+<!-- ─── Gallery ─── -->
+<section class="section section-white">
+  <div class="container">
+
+    <!-- Filters -->
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="seminars">Seminars</button>
+      <button class="filter-btn" data-filter="outreach">Global Outreach</button>
+      <button class="filter-btn" data-filter="medical">Medical Settings</button>
+      <button class="filter-btn" data-filter="community">Community</button>
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Populated by JS -->
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── Lightbox ─── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script>
+const galleryImages = [
+  { src: 'images/home/Examining Embryo Development - Shaare Zedek.jpg',   title: 'Embryo Development Lecture — Shaare Zedek', cat: 'medical' },
+  { src: 'images/home/Ramat Gan Conference.jpeg',                         title: 'Ramat Gan Conference', cat: 'seminars' },
+  { src: 'images/home/Ateret Torah Kolel - Brooklyn.jpeg',                title: 'Ateret Torah Kollel — Brooklyn, NY', cat: 'outreach' },
+  { src: 'images/home/Hidabroot shiur Pic.png',                           title: 'Hidabroot Lecture', cat: 'media' },
+  { src: 'images/gallery/Ashdod3.jpg',                                    title: 'Seminar in Ashdod', cat: 'seminars' },
+  { src: 'images/gallery/Chazak LA - Parenting.jpeg',                     title: 'Chazak LA — Parenting Topics', cat: 'community' },
+  { src: 'images/gallery/Chazak LA Vaccination.jpeg',                     title: 'Chazak LA — Vaccination & Halacha', cat: 'outreach' },
+  { src: 'images/gallery/End of life - LA.jpeg',                          title: 'End-of-Life Seminar — Los Angeles', cat: 'seminars' },
+  { src: 'images/gallery/Genetics - Manchester.jpeg',                     title: 'Genetics Lecture — Manchester, UK', cat: 'outreach' },
+  { src: 'images/gallery/Genetics - Young Israel LA.jpeg',                title: 'Genetics Lecture — Young Israel LA', cat: 'outreach' },
+  { src: 'images/gallery/Genetics Hendon.jpeg',                           title: 'Genetics Seminar — Hendon, London', cat: 'outreach' },
+  { src: 'images/gallery/KBT.jpeg',                                       title: 'KBT Community Event', cat: 'community' },
+  { src: 'images/gallery/Kashrut Yachad.jpeg',                            title: 'Kashrut Yachad Programme', cat: 'community' },
+  { src: 'images/gallery/LA Child Abuse.jpeg',                            title: 'Child Protection Seminar — Los Angeles', cat: 'seminars' },
+  { src: 'images/gallery/Medical Ethics for Drs LA.jpeg',                 title: 'Medical Ethics for Doctors — LA', cat: 'medical' },
+  { src: 'images/gallery/Miami - Child Protection.jpeg',                  title: 'Child Protection — Miami', cat: 'outreach' },
+  { src: 'images/gallery/Shalom Bayit & Intimacy LA.jpeg',                title: 'Shalom Bayit Seminar — Los Angeles', cat: 'community' },
+  { src: 'images/gallery/Torat Hayaim Shabbaton.jpeg',                    title: 'Torat Hayaim Shabbaton', cat: 'community' },
+  { src: 'images/gallery/genetics miami.jpg',                             title: 'Genetics Seminar — Miami', cat: 'outreach' },
+  { src: 'images/gallery/WhatsApp Image 2022-02-14 at 12.14.29 PM.jpeg',  title: 'Community Event 2022', cat: 'community' },
+  { src: 'images/gallery/WhatsApp Image 2022-02-16 at 4.14.07 PM.jpeg',   title: 'Outreach Event 2022', cat: 'community' },
+  { src: 'images/gallery/Yeshiva for a day Link - Genetics.png',          title: 'Yeshiva for a Day — Genetics', cat: 'seminars' },
+];
+
+function renderGallery(filter = 'all') {
+  const grid = document.getElementById('gallery-grid');
+  const items = filter === 'all' ? galleryImages : galleryImages.filter(i => i.cat === filter);
+  grid.innerHTML = items.map((img, i) => `
+    <div class="gallery-item" onclick="openLightbox('${img.src}', '${img.title.replace(/'/g, "\\'")}')">
+      <img src="${img.src}" alt="${img.title}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'">
+      <div class="gallery-overlay">
+        <span>${img.title}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openLightbox(src, title) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  img.alt = title;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (!e || e.target !== document.getElementById('lightbox-img')) {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderGallery();
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGallery(btn.dataset.filter);
+    });
+  });
+});
+</script>
+</body>
+</html>
