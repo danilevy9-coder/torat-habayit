@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/fruitguy/repositories/torat-habayit/
+    - export DEPLOYPATH=/home2/fruitguy/public_html/torathabayit.com/
     - /bin/cp -R * $DEPLOYPATH
