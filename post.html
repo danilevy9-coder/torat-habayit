@@ -109,14 +109,14 @@
 <script src="js/main.js"></script>
 <script src="js/blog.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   const slug = params.get('slug');
 
   let post = null;
-  if (id) post = BlogStore.getPost(id);
-  else if (slug) post = BlogStore.getPostBySlug(slug);
+  if (id) post = await BlogStore.getPost(id);
+  else if (slug) post = await BlogStore.getPostBySlug(slug);
 
   if (!post || post.status !== 'published') {
     document.getElementById('post-title').setAttribute('data-i18n', 'post_not_found_tit');
@@ -163,7 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
   postContent.setAttribute('data-i18n', conKey);
 
   // Related posts
-  const related = BlogStore.getPosts()
+  const allPosts = await BlogStore.getPosts();
+  const related = allPosts
     .filter(p => p.id !== post.id && p.status === 'published')
     .slice(0, 3);
   const relatedGrid = document.getElementById('related-posts');

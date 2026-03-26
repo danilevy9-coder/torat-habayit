@@ -232,12 +232,12 @@ if (sessionStorage.getItem('th_admin') !== '1') {
 }
 
 let pendingDeleteId = null;
+let currentPosts = [];
 
 // ── Init ──
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-  renderStats();
-  renderTable();
+  loadLocalPosts();
   document.getElementById('search-posts').addEventListener('input', () => renderTable());
 
   // Image uploader preview/b64 logic
@@ -255,8 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+async function loadLocalPosts() {
+  currentPosts = await BlogStore.getPosts();
+  renderStats();
+  renderTable();
+}
+
 function renderStats() {
-  const posts = BlogStore.getPosts();
+  const posts = currentPosts;
   const published = posts.filter(p => p.status === 'published').length;
   const drafts = posts.filter(p => p.status === 'draft').length;
   const cats = [...new Set(posts.map(p => p.category))].length;
@@ -271,7 +277,7 @@ function renderStats() {
 
 function renderTable(search = '') {
   const query = document.getElementById('search-posts')?.value.toLowerCase() || '';
-  const posts = BlogStore.getPosts().filter(p =>
+  const posts = currentPosts.filter(p =>
     !query || p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
   );
   const tbody = document.getElementById('posts-tbody');
@@ -340,7 +346,7 @@ function hideEditor() {
   document.getElementById('editor-panel').style.display = 'none';
 }
 
-function savePost(status) {
+async function savePost(status) {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { alert('Please enter a post title.'); return; }
 
@@ -363,36 +369,37 @@ function savePost(status) {
   };
 
   const editingId = document.getElementById('editing-id').value;
-  if (editingId) {
-    BlogStore.updatePost(editingId, postData);
-    showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
-  } else {
-    BlogStore.createPost(postData);
-    showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
+  try {
+    if (editingId) {
+      await BlogStore.updatePost(editingId, postData);
+      showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
+    } else {
+      await BlogStore.createPost(postData);
+      showToast(`Post ${status === 'published' ? 'published' : 'saved as draft'} successfully!`);
+    }
+    hideEditor();
+    await loadLocalPosts();
+  } catch (e) {
+    showToast('An error occurred while saving.', 'error');
+    console.error(e);
   }
-
-  hideEditor();
-  renderStats();
-  renderTable();
 }
 
 function editPost(id) {
-  const post = BlogStore.getPost(id);
+  const post = currentPosts.find(p => p.id === id);
   if (post) showEditor(post);
 }
 
-function publishPost(id) {
-  BlogStore.updatePost(id, { status: 'published' });
-  renderStats();
-  renderTable();
+async function publishPost(id) {
+  await BlogStore.updatePost(id, { status: 'published' });
   showToast('Post published!');
+  await loadLocalPosts();
 }
 
-function unpublishPost(id) {
-  BlogStore.updatePost(id, { status: 'draft' });
-  renderStats();
-  renderTable();
+async function unpublishPost(id) {
+  await BlogStore.updatePost(id, { status: 'draft' });
   showToast('Post moved to draft.');
+  await loadLocalPosts();
 }
 
 function openDeleteModal(id) {
@@ -405,13 +412,12 @@ function closeDeleteModal() {
   document.getElementById('delete-modal').style.display = 'none';
 }
 
-function confirmDelete() {
+async function confirmDelete() {
   if (pendingDeleteId) {
-    BlogStore.deletePost(pendingDeleteId);
+    await BlogStore.deletePost(pendingDeleteId);
     closeDeleteModal();
-    renderStats();
-    renderTable();
     showToast('Post deleted.', 'error');
+    await loadLocalPosts();
   }
 }
 
@@ -444,7 +450,7 @@ function insertList() {
 
 // ── Export ──
 function exportPosts() {
-  const posts = BlogStore.getPosts();
+  const posts = currentPosts;
   const json = JSON.stringify(posts, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);

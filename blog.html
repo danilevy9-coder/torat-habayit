@@ -65,10 +65,22 @@
 <script>
 let allPosts = [];
 
-function loadBlog(catFilter = 'all') {
+async function loadBlog(catFilter = 'all') {
   const grid = document.getElementById('blog-grid');
-  const posts = BlogStore.getPosts().filter(p => p.status === 'published');
-  allPosts = posts;
+
+  if (!window._blogPosts) {
+    grid.innerHTML = '<p style="color:var(--gray-400);grid-column:1/-1;text-align:center;padding:3rem 0" data-i18n="blog_no_posts">Loading posts...</p>';
+    if (typeof updateLanguage === 'function') setTimeout(() => updateLanguage(localStorage.getItem('siteLang') || 'en'), 10);
+    try {
+      const all = await BlogStore.getPosts();
+      window._blogPosts = all.filter(p => p.status === 'published');
+    } catch (e) {
+      grid.innerHTML = '<p style="color:#DC2626;grid-column:1/-1;text-align:center;padding:3rem 0">Error loading posts.</p>';
+      return;
+    }
+  }
+
+  const posts = window._blogPosts;
   const filtered = catFilter === 'all' ? posts : posts.filter(p => p.category === catFilter);
 
   if (filtered.length === 0) {
