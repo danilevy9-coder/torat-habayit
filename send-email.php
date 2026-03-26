@@ -55,6 +55,10 @@ $adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
 $adminMail = new PHPMailer(true);
 try {
     $adminMail->isSMTP();
+    $adminMail->SMTPDebug  = SMTP::DEBUG_SERVER;
+    $adminMail->Debugoutput = function($str, $level) {
+        file_put_contents(__DIR__ . '/smtp_debug.log', $str, FILE_APPEND);
+    };
     $adminMail->Host       = $smtpHost;
     $adminMail->SMTPAuth   = false;
     $adminMail->Username   = $smtpUser;
