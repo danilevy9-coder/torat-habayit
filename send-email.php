@@ -44,10 +44,10 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // ── SMTP Credentials ──
-$smtpHost     = 'localhost';
+$smtpHost     = 'mail.torathabayit.com';
 $smtpUser     = 'contact@torathabayit.com';
-$smtpPassword = ''; // Password not needed for localhost
-$smtpPort     = 25;
+$smtpPassword = 'Danidev456..789'; // ← MUST MATCH CPANEL EXACTLY
+$smtpPort     = 465;
 $fromName     = 'Torat Habayit Institute';
 $adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
 
@@ -55,15 +55,11 @@ $adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
 $adminMail = new PHPMailer(true);
 try {
     $adminMail->isSMTP();
-    $adminMail->SMTPDebug  = SMTP::DEBUG_SERVER;
-    $adminMail->Debugoutput = function($str, $level) {
-        file_put_contents(__DIR__ . '/smtp_debug.log', $str, FILE_APPEND);
-    };
     $adminMail->Host       = $smtpHost;
-    $adminMail->SMTPAuth   = false;
+    $adminMail->SMTPAuth   = true;
     $adminMail->Username   = $smtpUser;
     $adminMail->Password   = $smtpPassword;
-    $adminMail->SMTPSecure = false;
+    $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $adminMail->Port       = $smtpPort;
     $adminMail->CharSet    = 'UTF-8';
 
@@ -105,7 +101,7 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Sorry, there was an error sending your message. Please try again or call us directly.']);
+    echo json_encode(['success' => false, 'message' => 'SMTP ERROR: ' . $adminMail->ErrorInfo]);
     exit;
 }
 
@@ -114,10 +110,10 @@ $userMail = new PHPMailer(true);
 try {
     $userMail->isSMTP();
     $userMail->Host       = $smtpHost;
-    $userMail->SMTPAuth   = false;
+    $userMail->SMTPAuth   = true;
     $userMail->Username   = $smtpUser;
     $userMail->Password   = $smtpPassword;
-    $userMail->SMTPSecure = false;
+    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $userMail->Port       = $smtpPort;
     $userMail->CharSet    = 'UTF-8';
 
