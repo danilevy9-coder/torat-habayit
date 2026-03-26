@@ -44,10 +44,10 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // ── SMTP Credentials ──
-$smtpHost     = 'mail.torathabayit.com';
+$smtpHost     = 'localhost';
 $smtpUser     = 'contact@torathabayit.com';
-$smtpPassword = 'Danidev456..789'; // ← Replace with your cPanel email password
-$smtpPort     = 465;
+$smtpPassword = ''; // Password not needed for localhost
+$smtpPort     = 25;
 $fromName     = 'Torat Habayit Institute';
 $adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
 
@@ -56,10 +56,10 @@ $adminMail = new PHPMailer(true);
 try {
     $adminMail->isSMTP();
     $adminMail->Host       = $smtpHost;
-    $adminMail->SMTPAuth   = true;
+    $adminMail->SMTPAuth   = false;
     $adminMail->Username   = $smtpUser;
     $adminMail->Password   = $smtpPassword;
-    $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Port 465 = SSL
+    $adminMail->SMTPSecure = false;
     $adminMail->Port       = $smtpPort;
     $adminMail->CharSet    = 'UTF-8';
 
@@ -110,10 +110,10 @@ $userMail = new PHPMailer(true);
 try {
     $userMail->isSMTP();
     $userMail->Host       = $smtpHost;
-    $userMail->SMTPAuth   = true;
+    $userMail->SMTPAuth   = false;
     $userMail->Username   = $smtpUser;
     $userMail->Password   = $smtpPassword;
-    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $userMail->SMTPSecure = false;
     $userMail->Port       = $smtpPort;
     $userMail->CharSet    = 'UTF-8';
 
