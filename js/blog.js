@@ -80,7 +80,7 @@ const BlogStore = {
         excerpt: 'The question of brain death and organ donation remains one of the most debated issues in contemporary halachic literature. We examine the key positions and their practical implications.',
         content: "<p>The question of brain death and organ donation remains one of the most debated issues in contemporary halachic literature. Over the past several decades, the advancement of medical technology has forced poskim to grapple with questions that previous generations could never have anticipated.</p><p>The crux of the debate revolves around a single fundamental question: does brain death constitute halachic death (mitat ha-nes)? Traditional halachic sources, drawing on the Gemara in Yoma 85a, define death primarily through the cessation of breathing. The question is whether this applies only to irreversible cessation of respiratory function at the lung level, or whether it encompasses the brain's capacity to control breathing.</p><p>Rabbi Moshe Feinstein and Rabbi Shlomo Zalman Auerbach took differing views on this question, and their responsa have become the foundational texts for subsequent discussion. At the Torat Habayit Institute, we have worked to synthesize these positions into practical halachic guidance for the medical community and for families facing these most difficult decisions.</p>",
         category: 'Halacha',
-        author: 'Rabbi Yehuda Herzl Finchas',
+        author: 'Rabbi Yehuda Finchas',
         date: '2026-03-10',
         image: 'images/books/BD EN Book.jpg',
         status: 'published',

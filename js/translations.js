@@ -96,7 +96,7 @@ const translations = {
     
     "about_rosh_eyebrow": "Leadership",
     "about_rosh_title": "The Rosh HaMachon",
-    "about_rosh_name": "Rabbi Yehuda Herzl Finchas",
+    "about_rosh_name": "Rabbi Yehuda Finchas",
     "about_rosh_role": "Rosh HaMachon | Medical Halachic Authority",
     "about_rosh_bio_eyebrow": "Biography",
     "about_rosh_bio_title": "A Life Dedicated to Bridging Torah and Medicine",
@@ -315,7 +315,7 @@ const translations = {
     "donate_cheque_note": "Please contact us once you have sent a cheque so we can acknowledge receipt.",
     
     "donate_quote_txt": "Every donation to Torat Habayit is an investment in the clarity that saves lives — not only physically, but spiritually.",
-    "donate_quote_auth": "— Rabbi Yehuda Herzl Finchas, Rosh HaMachon",
+    "donate_quote_auth": "— Rabbi Yehuda Finchas, Rosh HaMachon",
     "donate_quote_btn": "Get in Touch",
 
     // Books
@@ -492,7 +492,7 @@ const translations = {
     "blog_cat_halacha": "Halacha",
     "blog_cat_practical": "Practical Halacha",
     "blog_cat_announcements": "Announcements",
-    "blog_auth_1": "Rabbi Yehuda Herzl Finchas",
+    "blog_auth_1": "Rabbi Yehuda Finchas",
     "blog_auth_2": "Torat Habayit Institute",
 
     "blog_post_1_tit": "Brain Death in Halacha: Understanding the Contemporary Debate",
@@ -631,7 +631,7 @@ const translations = {
     
     "about_rosh_eyebrow": "הנהגה",
     "about_rosh_title": "ראש המכון",
-    "about_rosh_name": "הרב יהודה הרצל פינחס",
+    "about_rosh_name": "הרב יהודה פינחס",
     "about_rosh_role": "ראש המכון | סמכות רפואית הלכתית",
     "about_rosh_bio_eyebrow": "ביוגרפיה",
     "about_rosh_bio_title": "חיים המוקדשים לחיבור בין תורה ורפואה",
@@ -850,7 +850,7 @@ const translations = {
     "donate_cheque_note": "אנא צרו איתנו קשר לאחר שליחת הצ'ק כדי שנוכל לאשר קבלה.",
     
     "donate_quote_txt": "כל תרומה לתורת הבית היא השקעה בבהירות שמצילה חיים — לא רק בגשמיות, אלא גם ברוחניות.",
-    "donate_quote_auth": "— הרב יהודה הרצל פנחס, ראש המכון",
+    "donate_quote_auth": "— הרב יהודה פנחס, ראש המכון",
     "donate_quote_btn": "צרו קשר",
 
     // Books
@@ -1027,7 +1027,7 @@ const translations = {
     "blog_cat_halacha": "הלכה",
     "blog_cat_practical": "הלכה למעשה",
     "blog_cat_announcements": "עדכונים",
-    "blog_auth_1": "הרב יהודה הרצל פנחס",
+    "blog_auth_1": "הרב יהודה פנחס",
     "blog_auth_2": "מכון תורת הבית",
 
     "blog_post_1_tit": "מוות מוחי בהלכה: הבנת הפולמוס בן זמננו",
