@@ -136,48 +136,48 @@
           <div class="form-row">
             <div class="form-group">
               <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" class="form-control" placeholder="Yosef" required>
+              <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Yosef" required>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" class="form-control" placeholder="Cohen" required>
+              <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Cohen" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="email">Email Address *</label>
-              <input type="email" id="email" class="form-control" placeholder="yosef@example.com" required>
+              <input type="email" id="email" name="email" class="form-control" placeholder="yosef@example.com" required>
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" class="form-control" placeholder="+1-555-000-0000">
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1-555-000-0000">
             </div>
           </div>
 
           <div class="form-group">
             <label for="reason">Reason for Inquiry *</label>
-            <select id="reason" class="form-control" required>
+            <select id="reason" name="reason" class="form-control" required>
               <option value="" disabled selected>— Please select —</option>
-              <option value="consultation">Medical-Halachic Consultation</option>
-              <option value="seminar">Book a Lecture / Seminar</option>
-              <option value="publication">Publication Order</option>
-              <option value="donation">Donation Inquiry</option>
-              <option value="media">Media / Press</option>
-              <option value="general">General Inquiry</option>
+              <option value="Medical-Halachic Consultation">Medical-Halachic Consultation</option>
+              <option value="Book a Lecture / Seminar">Book a Lecture / Seminar</option>
+              <option value="Publication Order">Publication Order</option>
+              <option value="Donation Inquiry">Donation Inquiry</option>
+              <option value="Media / Press">Media / Press</option>
+              <option value="General Inquiry">General Inquiry</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="message">Message *</label>
-            <textarea id="message" class="form-control" placeholder="Please describe your inquiry..." required></textarea>
+            <textarea id="message" name="message" class="form-control" placeholder="Please describe your inquiry..." required></textarea>
           </div>
 
           <div class="privacy-note">
             🔒 <strong>Your privacy is our priority.</strong> All medical-halachic consultations are handled with the highest level of confidentiality. Your information will never be shared with third parties.
           </div>
 
-          <button type="submit" class="submit-btn">Send Message →</button>
+          <button type="submit" class="submit-btn" id="submit-btn">Send Message →</button>
         </form>
       </div>
 
@@ -206,15 +206,39 @@
 <script>
 function submitContactForm(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('.submit-btn');
-  btn.textContent = 'Sending...';
+  const form = e.target;
+  const btn = form.querySelector('#submit-btn');
+
+  // Disable button and show loading state
   btn.disabled = true;
-  setTimeout(() => {
-    showToast('Thank you! Your message has been sent. We\'ll be in touch soon.');
-    e.target.reset();
-    btn.textContent = 'Send Message →';
+  btn.textContent = 'Sending...';
+
+  // Create FormData from form
+  const formData = new FormData(form);
+
+  // Send via AJAX to PHP script
+  fetch('send-email.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      showToast(data.message, 'success');
+      form.reset();
+    } else {
+      showToast(data.message, 'error');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    showToast('Sorry, there was an error sending your message. Please try again.', 'error');
+  })
+  .finally(() => {
+    // Re-enable button
     btn.disabled = false;
-  }, 1200);
+    btn.textContent = 'Send Message →';
+  });
 }
 </script>
 </body>
