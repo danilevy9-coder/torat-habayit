@@ -43,11 +43,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// ── SMTP Credentials ──
-$smtpHost     = 'mail.torathabayit.com';
-$smtpUser     = 'contact@torathabayit.com';
-$smtpPassword = 'Danidev456..789'; // ← MUST MATCH CPANEL EXACTLY
-$smtpPort     = 465;
+// ── SMTP Credentials (Brevo) ──
+$smtpHost     = 'smtp-relay.brevo.com';
+$smtpUser     = 'a62630001@smtp-brevo.com';
+$smtpPassword = 'YOUR_BREVO_MASTER_PASSWORD'; // ← Replace with your Brevo SMTP Master Password!
+$smtpPort     = 587;
 $fromName     = 'Torat Habayit Institute';
 $adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
 
@@ -59,7 +59,7 @@ try {
     $adminMail->SMTPAuth   = true;
     $adminMail->Username   = $smtpUser;
     $adminMail->Password   = $smtpPassword;
-    $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $adminMail->Port       = $smtpPort;
     $adminMail->CharSet    = 'UTF-8';
 
@@ -113,7 +113,7 @@ try {
     $userMail->SMTPAuth   = true;
     $userMail->Username   = $smtpUser;
     $userMail->Password   = $smtpPassword;
-    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $userMail->Port       = $smtpPort;
     $userMail->CharSet    = 'UTF-8';
 
