@@ -65,7 +65,7 @@
 <!-- ─── Post Hero ─── -->
 <section class="post-hero" id="post-hero">
   <div class="container">
-    <a href="blog.html" class="back-link">← Back to Blog</a>
+    <a href="blog.html" class="back-link" data-i18n="post_back_link">← Back to Blog</a>
     <div id="post-cat" class="eyebrow" style="margin-bottom:0.5rem;"></div>
     <h1 id="post-title" style="color:var(--white); max-width:780px;"></h1>
     <div class="post-meta" id="post-meta"></div>
@@ -83,12 +83,12 @@
     <!-- Share + Related -->
     <div style="max-width:740px; margin:3rem auto 0; padding-top:2rem; border-top:1px solid var(--gray-200); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
       <div>
-        <span style="font-size:0.85rem; color:var(--gray-600); margin-right:0.75rem;">Share:</span>
+        <span style="font-size:0.85rem; color:var(--gray-600); margin-right:0.75rem;" data-i18n="post_share">Share:</span>
         <a href="#" onclick="sharePost('facebook')" style="color:var(--navy); margin-right:0.75rem; font-size:0.85rem;">Facebook</a>
         <a href="#" onclick="sharePost('twitter')"  style="color:var(--navy); margin-right:0.75rem; font-size:0.85rem;">Twitter</a>
         <a href="#" onclick="sharePost('whatsapp')" style="color:var(--navy); font-size:0.85rem;">WhatsApp</a>
       </div>
-      <a href="blog.html" class="btn btn-outline-gold btn-sm">← More Articles</a>
+      <a href="blog.html" class="btn btn-outline-gold btn-sm" data-i18n="post_more_btn">← More Articles</a>
     </div>
   </div>
 </section>
@@ -96,13 +96,15 @@
 <!-- ─── Related Posts ─── -->
 <section class="section section-gray" style="padding:60px 0;" id="related-section">
   <div class="container">
-    <h3 style="color:var(--navy); margin-bottom:2rem;">More Articles</h3>
+    <h3 style="color:var(--navy); margin-bottom:2rem;" data-i18n="post_more_hdr">More Articles</h3>
     <div class="blog-grid" id="related-posts"></div>
   </div>
 </section>
 
 <div id="footer-placeholder"></div>
 
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/components.js"></script>
 <script src="js/main.js"></script>
 <script src="js/blog.js"></script>
@@ -117,8 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
   else if (slug) post = BlogStore.getPostBySlug(slug);
 
   if (!post || post.status !== 'published') {
-    document.getElementById('post-title').textContent = 'Post not found';
-    document.getElementById('post-content').innerHTML = '<p>Sorry, this article could not be found. <a href="blog.html">Return to blog →</a></p>';
+    document.getElementById('post-title').setAttribute('data-i18n', 'post_not_found_tit');
+    document.getElementById('post-content').innerHTML = '<p><span data-i18n="post_not_found_desc">Sorry, this article could not be found.</span> <a href="blog.html" data-i18n="post_ret_blog">Return to blog →</a></p>';
+    if (typeof updateLanguage === 'function') {
+      const currentLang = localStorage.getItem('siteLang') || 'en';
+      setTimeout(() => updateLanguage(currentLang), 10);
+    }
     return;
   }
 
@@ -126,11 +132,22 @@ document.addEventListener('DOMContentLoaded', () => {
   document.title = post.title + ' – Torat Habayit Institute';
   document.getElementById('page-title').textContent = post.title + ' – Torat Habayit Institute';
 
+  const catKey = post.category === 'Halacha' ? 'blog_cat_halacha' : (post.category === 'Practical Halacha' ? 'blog_cat_practical' : 'blog_cat_announcements');
+  const authorKey = post.author.includes('Rabbi') ? 'blog_auth_1' : 'blog_auth_2';
+  const titleKey = `blog_post_${post.id}_tit`;
+  const conKey = `blog_post_${post.id}_con`;
+
   // Hero
-  document.getElementById('post-cat').textContent = post.category;
-  document.getElementById('post-title').textContent = post.title;
+  const postCat = document.getElementById('post-cat');
+  postCat.textContent = post.category;
+  postCat.setAttribute('data-i18n', catKey);
+  
+  const postTitle = document.getElementById('post-title');
+  postTitle.textContent = post.title;
+  postTitle.setAttribute('data-i18n', titleKey);
+
   const dateFormatted = new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  document.getElementById('post-meta').textContent = `${dateFormatted} · ${post.author}`;
+  document.getElementById('post-meta').innerHTML = `${dateFormatted} · <span data-i18n="${authorKey}">${post.author}</span>`;
 
   // Featured image
   if (post.image) {
@@ -141,7 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Content
-  document.getElementById('post-content').innerHTML = post.content;
+  const postContent = document.getElementById('post-content');
+  postContent.innerHTML = post.content;
+  postContent.setAttribute('data-i18n', conKey);
 
   // Related posts
   const related = BlogStore.getPosts()
@@ -152,6 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
     relatedGrid.innerHTML = related.map(renderBlogCard).join('');
   } else {
     document.getElementById('related-section').style.display = 'none';
+  }
+  
+  if (typeof updateLanguage === 'function') {
+    const currentLang = localStorage.getItem('siteLang') || 'en';
+    setTimeout(() => updateLanguage(currentLang), 10);
   }
 });
 

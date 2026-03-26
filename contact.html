@@ -59,10 +59,10 @@
 <!-- ─── Hero ─── -->
 <section class="page-hero">
   <div class="container">
-    <span class="eyebrow">Reach Us</span>
-    <h1>Get in Touch</h1>
+    <span class="eyebrow" data-i18n="contact_hero_eyebrow">Reach Us</span>
+    <h1 data-i18n="contact_hero_title">Get in Touch</h1>
     <div class="gold-divider" style="margin:1rem 0;"></div>
-    <p>Whether you have a halachic question, want to book a seminar, or simply want to learn more — we're here for you.</p>
+    <p data-i18n="contact_hero_sub">Whether you have a halachic question, want to book a seminar, or simply want to learn more — we're here for you.</p>
   </div>
 </section>
 
@@ -73,21 +73,21 @@
 
       <!-- Left: Info -->
       <div class="contact-info-card">
-        <h2 style="color:var(--white); margin-bottom:0.5rem; font-size:1.6rem;">Contact Information</h2>
-        <p style="color:rgba(255,255,255,0.55); margin-bottom:2.5rem; font-size:0.9rem;">Reach us directly — all inquiries are responded to with care.</p>
+        <h2 style="color:var(--white); margin-bottom:0.5rem; font-size:1.6rem;" data-i18n="contact_info_title">Contact Information</h2>
+        <p style="color:rgba(255,255,255,0.55); margin-bottom:2.5rem; font-size:0.9rem;" data-i18n="contact_info_sub">Reach us directly — all inquiries are responded to with care.</p>
 
         <div class="contact-info-item">
           <div class="contact-info-icon">📍</div>
           <div class="contact-info-text">
-            <h4>Office Address</h4>
-            <p>Rechov Haran 3/3<br>Jerusalem 9246603, Israel</p>
+            <h4 data-i18n="contact_office_title">Office Address</h4>
+            <p data-i18n="contact_office_address">Rechov Haran 3/3<br>Jerusalem 9246603, Israel</p>
           </div>
         </div>
 
         <div class="contact-info-item">
           <div class="contact-info-icon">📞</div>
           <div class="contact-info-text">
-            <h4>Israel Phone</h4>
+            <h4 data-i18n="contact_phone_il">Israel Phone</h4>
             <a href="tel:026504650">02-650-4-650</a>
           </div>
         </div>
@@ -95,7 +95,7 @@
         <div class="contact-info-item">
           <div class="contact-info-icon">📞</div>
           <div class="contact-info-text">
-            <h4>USA Phone</h4>
+            <h4 data-i18n="contact_phone_us">USA Phone</h4>
             <a href="tel:+17187040985">+1-718-704-0985</a>
           </div>
         </div>
@@ -103,25 +103,25 @@
         <div class="contact-info-item">
           <div class="contact-info-icon">✉️</div>
           <div class="contact-info-text">
-            <h4>Email</h4>
+            <h4 data-i18n="contact_email">Email</h4>
             <a href="mailto:info@torathabayit.com">info@torathabayit.com</a>
           </div>
         </div>
 
         <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:1.5rem; padding-top:1.75rem;">
-          <h3 style="color:var(--gold); font-size:1rem; margin-bottom:1rem;">Office Hours</h3>
+          <h3 style="color:var(--gold); font-size:1rem; margin-bottom:1rem;" data-i18n="contact_hours_title">Office Hours</h3>
           <div style="display:grid; gap:0.5rem;">
             <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
-              <span style="color:rgba(255,255,255,0.6);">Sunday – Thursday</span>
-              <span style="color:var(--white);">9:00 AM – 5:00 PM (Israel time)</span>
+              <span style="color:rgba(255,255,255,0.6);" data-i18n="contact_hours_sun">Sunday – Thursday</span>
+              <span style="color:var(--white);" data-i18n="contact_hours_sun_time">9:00 AM – 5:00 PM (Israel time)</span>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
-              <span style="color:rgba(255,255,255,0.6);">Friday</span>
-              <span style="color:var(--white);">9:00 AM – 1:00 PM</span>
+              <span style="color:rgba(255,255,255,0.6);" data-i18n="contact_hours_fri">Friday</span>
+              <span style="color:var(--white);" data-i18n="contact_hours_fri_time">9:00 AM – 1:00 PM</span>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
-              <span style="color:rgba(255,255,255,0.6);">Shabbat</span>
-              <span style="color:rgba(255,255,255,0.4);">Closed</span>
+              <span style="color:rgba(255,255,255,0.6);" data-i18n="contact_hours_shabbat">Shabbat</span>
+              <span style="color:rgba(255,255,255,0.4);" data-i18n="contact_hours_shabbat_time">Closed</span>
             </div>
           </div>
         </div>
@@ -129,55 +129,55 @@
 
       <!-- Right: Form -->
       <div class="form-container">
-        <h2 style="color:var(--navy); margin-bottom:0.5rem; font-size:1.6rem;">Send Us a Message</h2>
-        <p style="color:var(--gray-600); margin-bottom:2rem; font-size:0.9rem;">We typically respond within 1–2 business days.</p>
+        <h2 style="color:var(--navy); margin-bottom:0.5rem; font-size:1.6rem;" data-i18n="contact_form_title">Send Us a Message</h2>
+        <p style="color:var(--gray-600); margin-bottom:2rem; font-size:0.9rem;" data-i18n="contact_form_sub">We typically respond within 1–2 business days.</p>
 
         <form id="contact-form" onsubmit="submitContactForm(event)">
           <div class="form-row">
             <div class="form-group">
-              <label for="firstName">First Name *</label>
+              <label for="firstName" data-i18n="contact_form_fn">First Name *</label>
               <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Yosef" required>
             </div>
             <div class="form-group">
-              <label for="lastName">Last Name *</label>
+              <label for="lastName" data-i18n="contact_form_ln">Last Name *</label>
               <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Cohen" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="email">Email Address *</label>
+              <label for="email" data-i18n="contact_form_email">Email Address *</label>
               <input type="email" id="email" name="email" class="form-control" placeholder="yosef@example.com" required>
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number</label>
+              <label for="phone" data-i18n="contact_form_phone">Phone Number</label>
               <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1-555-000-0000">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="reason">Reason for Inquiry *</label>
+            <label for="reason" data-i18n="contact_form_reason">Reason for Inquiry *</label>
             <select id="reason" name="reason" class="form-control" required>
-              <option value="" disabled selected>— Please select —</option>
-              <option value="Medical-Halachic Consultation">Medical-Halachic Consultation</option>
-              <option value="Book a Lecture / Seminar">Book a Lecture / Seminar</option>
-              <option value="Publication Order">Publication Order</option>
-              <option value="Donation Inquiry">Donation Inquiry</option>
-              <option value="Media / Press">Media / Press</option>
-              <option value="General Inquiry">General Inquiry</option>
+              <option value="" disabled selected data-i18n="contact_form_reason_opt1">— Please select —</option>
+              <option value="Medical-Halachic Consultation" data-i18n="contact_form_reason_opt2">Medical-Halachic Consultation</option>
+              <option value="Book a Lecture / Seminar" data-i18n="contact_form_reason_opt3">Book a Lecture / Seminar</option>
+              <option value="Publication Order" data-i18n="contact_form_reason_opt4">Publication Order</option>
+              <option value="Donation Inquiry" data-i18n="contact_form_reason_opt5">Donation Inquiry</option>
+              <option value="Media / Press" data-i18n="contact_form_reason_opt6">Media / Press</option>
+              <option value="General Inquiry" data-i18n="contact_form_reason_opt7">General Inquiry</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="message">Message *</label>
+            <label for="message" data-i18n="contact_form_msg">Message *</label>
             <textarea id="message" name="message" class="form-control" placeholder="Please describe your inquiry..." required></textarea>
           </div>
 
-          <div class="privacy-note">
+          <div class="privacy-note" data-i18n="contact_form_priv">
             🔒 <strong>Your privacy is our priority.</strong> All medical-halachic consultations are handled with the highest level of confidentiality. Your information will never be shared with third parties.
           </div>
 
-          <button type="submit" class="submit-btn" id="submit-btn">Send Message →</button>
+          <button type="submit" class="submit-btn" id="submit-btn" data-i18n="contact_form_btn">Send Message →</button>
         </form>
       </div>
 
@@ -189,10 +189,10 @@
 <section class="section section-gray" style="padding:60px 0;">
   <div class="container">
     <div style="background:var(--navy); border-radius:var(--radius-lg); padding:3rem; text-align:center;">
-      <span class="eyebrow">Location</span>
-      <h3 style="color:var(--white); margin:0.5rem 0 0.5rem;">Jerusalem, Israel</h3>
-      <p style="color:rgba(255,255,255,0.6); margin-bottom:1.5rem;">Rechov Haran 3/3, Jerusalem 9246603</p>
-      <a href="https://maps.google.com/?q=Rechov+Haran+3+Jerusalem+Israel" target="_blank" class="btn btn-gold">
+      <span class="eyebrow" data-i18n="contact_map_eyebrow">Location</span>
+      <h3 style="color:var(--white); margin:0.5rem 0 0.5rem;" data-i18n="contact_map_city">Jerusalem, Israel</h3>
+      <p style="color:rgba(255,255,255,0.6); margin-bottom:1.5rem;" data-i18n="contact_map_address">Rechov Haran 3/3, Jerusalem 9246603</p>
+      <a href="https://maps.google.com/?q=Rechov+Haran+3+Jerusalem+Israel" target="_blank" class="btn btn-gold" data-i18n="contact_map_btn">
         📍 Open in Google Maps
       </a>
     </div>
@@ -201,6 +201,8 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/components.js"></script>
 <script src="js/main.js"></script>
 <script>

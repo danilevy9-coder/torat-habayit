@@ -14,10 +14,10 @@
 <!-- ─── Hero ─── -->
 <section class="page-hero">
   <div class="container">
-    <span class="eyebrow">Knowledge & Insights</span>
-    <h1>Articles &amp; Blog</h1>
+    <span class="eyebrow" data-i18n="blog_hero_eyebrow">Knowledge & Insights</span>
+    <h1 data-i18n="blog_hero_title">Articles &amp; Blog</h1>
     <div class="gold-divider" style="margin:1rem 0;"></div>
-    <p>Halachic insights, announcements, and educational content from the Torat Habayit Institute.</p>
+    <p data-i18n="blog_hero_sub">Halachic insights, announcements, and educational content from the Torat Habayit Institute.</p>
   </div>
 </section>
 
@@ -27,15 +27,15 @@
 
     <!-- Category Filter -->
     <div class="gallery-filters" id="blog-filters" style="justify-content:flex-start; margin-bottom:2.5rem;">
-      <button class="filter-btn active" data-cat="all">All</button>
-      <button class="filter-btn" data-cat="Halacha">Halacha</button>
-      <button class="filter-btn" data-cat="Practical Halacha">Practical</button>
-      <button class="filter-btn" data-cat="Announcements">Announcements</button>
-      <button class="filter-btn" data-cat="Research">Research</button>
+      <button class="filter-btn active" data-cat="all" data-i18n="blog_filter_1">All</button>
+      <button class="filter-btn" data-cat="Halacha" data-i18n="blog_filter_2">Halacha</button>
+      <button class="filter-btn" data-cat="Practical Halacha" data-i18n="blog_filter_3">Practical</button>
+      <button class="filter-btn" data-cat="Announcements" data-i18n="blog_filter_4">Announcements</button>
+      <button class="filter-btn" data-cat="Research" data-i18n="blog_filter_5">Research</button>
     </div>
 
     <div id="blog-grid" class="blog-grid">
-      <p style="color:var(--gray-400); grid-column:1/-1; text-align:center; padding:3rem 0;">Loading posts...</p>
+      <p style="color:var(--gray-400); grid-column:1/-1; text-align:center; padding:3rem 0;" data-i18n="blog_no_posts">Loading posts...</p>
     </div>
 
   </div>
@@ -44,19 +44,21 @@
 <!-- ─── Newsletter Callout ─── -->
 <section class="section section-navy" style="padding:70px 0;">
   <div class="container" style="max-width:600px; text-align:center;">
-    <span class="eyebrow">Stay Informed</span>
-    <h2 style="color:var(--white); margin:0.75rem 0 1rem;">Subscribe to Our Newsletter</h2>
-    <p style="color:rgba(255,255,255,0.7); margin-bottom:2rem;">Receive new articles, halachic insights, and seminar announcements directly to your inbox.</p>
+    <span class="eyebrow" data-i18n="blog_nl_eyebrow">Stay Informed</span>
+    <h2 style="color:var(--white); margin:0.75rem 0 1rem;" data-i18n="blog_nl_title">Subscribe to Our Newsletter</h2>
+    <p style="color:rgba(255,255,255,0.7); margin-bottom:2rem;" data-i18n="blog_nl_sub">Receive new articles, halachic insights, and seminar announcements directly to your inbox.</p>
     <form style="display:flex; gap:0; max-width:440px; margin:0 auto;" onsubmit="subscribeNewsletter(event)">
       <input type="email" placeholder="Your email address" required
         style="flex:1; padding:0.9rem 1.25rem; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); border-right:none; border-radius:50px 0 0 50px; color:var(--white); font-size:0.9rem;">
-      <button type="submit" style="padding:0.9rem 1.5rem; background:var(--gold); color:var(--navy); font-weight:700; border-radius:0 50px 50px 0; border:none; cursor:pointer;">Subscribe</button>
+      <button type="submit" style="padding:0.9rem 1.5rem; background:var(--gold); color:var(--navy); font-weight:700; border-radius:0 50px 50px 0; border:none; cursor:pointer;" data-i18n="blog_nl_btn">Subscribe</button>
     </form>
   </div>
 </section>
 
 <div id="footer-placeholder"></div>
 
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/components.js"></script>
 <script src="js/main.js"></script>
 <script src="js/blog.js"></script>
@@ -70,15 +72,28 @@ function loadBlog(catFilter = 'all') {
   const filtered = catFilter === 'all' ? posts : posts.filter(p => p.category === catFilter);
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<p style="color:var(--gray-400);grid-column:1/-1;text-align:center;padding:3rem 0">No posts in this category yet.</p>';
+    grid.innerHTML = '<p data-i18n="blog_no_cat" style="color:var(--gray-400);grid-column:1/-1;text-align:center;padding:3rem 0">No posts in this category yet.</p>';
+    if (typeof updateLanguage === 'function') {
+      const currentLang = localStorage.getItem('siteLang') || 'en';
+      setTimeout(() => updateLanguage(currentLang), 10);
+    }
     return;
   }
   grid.innerHTML = filtered.map(renderBlogCard).join('');
+  
+  if (typeof updateLanguage === 'function') {
+    const currentLang = localStorage.getItem('siteLang') || 'en';
+    setTimeout(() => updateLanguage(currentLang), 10);
+  }
 }
 
 function subscribeNewsletter(e) {
   e.preventDefault();
-  showToast('Thank you for subscribing!');
+  const currentLang = localStorage.getItem('siteLang') || 'en';
+  const msg = (typeof translations !== 'undefined' && translations[currentLang] && translations[currentLang]['blog_nl_toast']) 
+    ? translations[currentLang]['blog_nl_toast'] 
+    : 'Thank you for subscribing!';
+  showToast(msg);
   e.target.reset();
 }
 

@@ -14,10 +14,10 @@
 <!-- ─── Hero ─── -->
 <section class="page-hero">
   <div class="container">
-    <span class="eyebrow">Visual Archive</span>
-    <h1>Visualizing Our Impact</h1>
+    <span class="eyebrow" data-i18n="gal_hero_eyebrow">Visual Archive</span>
+    <h1 data-i18n="gal_hero_title">Visualizing Our Impact</h1>
     <div class="gold-divider" style="margin:1rem 0;"></div>
-    <p>A curated record of seminars, international outreach, media appearances, and community events.</p>
+    <p data-i18n="gal_hero_sub">A curated record of seminars, international outreach, media appearances, and community events.</p>
   </div>
 </section>
 
@@ -27,11 +27,11 @@
 
     <!-- Filters -->
     <div class="gallery-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="seminars">Seminars</button>
-      <button class="filter-btn" data-filter="outreach">Global Outreach</button>
-      <button class="filter-btn" data-filter="medical">Medical Settings</button>
-      <button class="filter-btn" data-filter="community">Community</button>
+      <button class="filter-btn active" data-filter="all" data-i18n="gal_filter_1">All</button>
+      <button class="filter-btn" data-filter="seminars" data-i18n="gal_filter_2">Seminars</button>
+      <button class="filter-btn" data-filter="outreach" data-i18n="gal_filter_3">Global Outreach</button>
+      <button class="filter-btn" data-filter="medical" data-i18n="gal_filter_4">Medical Settings</button>
+      <button class="filter-btn" data-filter="community" data-i18n="gal_filter_5">Community</button>
     </div>
 
     <div class="gallery-grid" id="gallery-grid">
@@ -49,6 +49,8 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/components.js"></script>
 <script src="js/main.js"></script>
 <script>
@@ -79,22 +81,33 @@ const galleryImages = [
 
 function renderGallery(filter = 'all') {
   const grid = document.getElementById('gallery-grid');
-  const items = filter === 'all' ? galleryImages : galleryImages.filter(i => i.cat === filter);
-  grid.innerHTML = items.map((img, i) => `
-    <div class="gallery-item" onclick="openLightbox('${img.src}', '${img.title.replace(/'/g, "\\'")}')">
+  // keep original index for localized key
+  const items = galleryImages.map((img, index) => ({...img, origIndex: index + 1}));
+  const filtered = filter === 'all' ? items : items.filter(i => i.cat === filter);
+  
+  grid.innerHTML = filtered.map(img => `
+    <div class="gallery-item" onclick="openLightbox('${img.src}', 'gal_img_${img.origIndex}')">
       <img src="${img.src}" alt="${img.title}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'">
       <div class="gallery-overlay">
-        <span>${img.title}</span>
+        <span data-i18n="gal_img_${img.origIndex}">${img.title}</span>
       </div>
     </div>
   `).join('');
+  
+  if (typeof updateLanguage === 'function') {
+    const currentLang = localStorage.getItem('siteLang') || 'en';
+    setTimeout(() => updateLanguage(currentLang), 10);
+  }
 }
 
-function openLightbox(src, title) {
+function openLightbox(src, titleKey) {
   const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
   img.src = src;
-  img.alt = title;
+  const currentLang = localStorage.getItem('siteLang') || 'en';
+  img.alt = (typeof translations !== 'undefined' && translations[currentLang] && translations[currentLang][titleKey]) 
+    ? translations[currentLang][titleKey] 
+    : titleKey;
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
 }

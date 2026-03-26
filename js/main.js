@@ -50,10 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
     newsletterForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const input = newsletterForm.querySelector('input');
-      if (input.value) {
-        showToast('Thank you for subscribing!');
-        input.value = '';
-      }
+      const email = input.value;
+      
+      if (!email) return;
+      
+      const btn = newsletterForm.querySelector('button');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⋯';
+      btn.disabled = true;
+
+      const formData = new FormData();
+      formData.append('email', email);
+
+      fetch('subscribe.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showToast(data.message, 'success');
+          input.value = '';
+        } else {
+          showToast(data.message, 'error');
+        }
+      })
+      .catch(error => {
+        showToast('Error subscribing. Please try again.', 'error');
+      })
+      .finally(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
     });
   }
 

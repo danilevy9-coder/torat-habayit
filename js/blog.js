@@ -78,7 +78,7 @@ const BlogStore = {
         title: 'Brain Death in Halacha: Understanding the Contemporary Debate',
         slug: 'brain-death-in-halacha-contemporary-debate',
         excerpt: 'The question of brain death and organ donation remains one of the most debated issues in contemporary halachic literature. We examine the key positions and their practical implications.',
-        content: '<p>The question of brain death and organ donation remains one of the most debated issues in contemporary halachic literature. Over the past several decades, the advancement of medical technology has forced poskim to grapple with questions that previous generations could never have anticipated.</p><p>The crux of the debate revolves around a single fundamental question: does brain death constitute halachic death (mitat ha-nes)? Traditional halachic sources, drawing on the Gemara in Yoma 85a, define death primarily through the cessation of breathing. The question is whether this applies only to irreversible cessation of respiratory function at the lung level, or whether it encompasses the brain's capacity to control breathing.</p><p>Rabbi Moshe Feinstein and Rabbi Shlomo Zalman Auerbach took differing views on this question, and their responsa have become the foundational texts for subsequent discussion. At the Torat Habayit Institute, we have worked to synthesize these positions into practical halachic guidance for the medical community and for families facing these most difficult decisions.</p>',
+        content: "<p>The question of brain death and organ donation remains one of the most debated issues in contemporary halachic literature. Over the past several decades, the advancement of medical technology has forced poskim to grapple with questions that previous generations could never have anticipated.</p><p>The crux of the debate revolves around a single fundamental question: does brain death constitute halachic death (mitat ha-nes)? Traditional halachic sources, drawing on the Gemara in Yoma 85a, define death primarily through the cessation of breathing. The question is whether this applies only to irreversible cessation of respiratory function at the lung level, or whether it encompasses the brain's capacity to control breathing.</p><p>Rabbi Moshe Feinstein and Rabbi Shlomo Zalman Auerbach took differing views on this question, and their responsa have become the foundational texts for subsequent discussion. At the Torat Habayit Institute, we have worked to synthesize these positions into practical halachic guidance for the medical community and for families facing these most difficult decisions.</p>",
         category: 'Halacha',
         author: 'Rabbi Yehuda Herzl Finchas',
         date: '2026-03-10',
@@ -116,17 +116,22 @@ const BlogStore = {
 /* ─── Blog Card Template ─── */
 function renderBlogCard(post) {
   const dateFormatted = new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const catKey = post.category === 'Halacha' ? 'blog_cat_halacha' : (post.category === 'Practical Halacha' ? 'blog_cat_practical' : 'blog_cat_announcements');
+  const authorKey = post.author.includes('Rabbi') ? 'blog_auth_1' : 'blog_auth_2';
+  const titleKey = `blog_post_${post.id}_tit`;
+  const excKey = `blog_post_${post.id}_exc`;
+
   return `
   <article class="blog-card">
     <div class="blog-card-img">
       ${post.image ? `<img src="${post.image}" alt="${post.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
-      <span class="blog-cat">${post.category}</span>
+      <span class="blog-cat" data-i18n="${catKey}">${post.category}</span>
     </div>
     <div class="blog-card-body">
-      <div class="blog-card-meta">${dateFormatted} · ${post.author}</div>
-      <h3>${post.title}</h3>
-      <p>${post.excerpt}</p>
-      <a href="post.html?id=${post.id}" class="read-more">Read More →</a>
+      <div class="blog-card-meta">${dateFormatted} · <span data-i18n="${authorKey}">${post.author}</span></div>
+      <h3 data-i18n="${titleKey}">${post.title}</h3>
+      <p data-i18n="${excKey}">${post.excerpt}</p>
+      <a href="post.html?id=${post.id}" class="read-more" data-i18n="blog_read_more">Read More →</a>
     </div>
   </article>`;
 }
