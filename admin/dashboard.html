@@ -153,8 +153,13 @@
     </div>
 
     <div class="form-group">
-      <label>Featured Image URL (optional)</label>
-      <input type="text" id="f-image" class="form-control" placeholder="e.g. ../images/books/ANH Book.jpg">
+      <label>Featured Image</label>
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <input type="file" id="f-image-file" accept="image/*" class="form-control" style="flex:1; padding:0.6rem;">
+        <span style="font-size:0.85rem; color:var(--gray-400);">OR URL:</span>
+        <input type="text" id="f-image" class="form-control" placeholder="e.g. ../images/books/ANH Book.jpg" style="flex:1;">
+      </div>
+      <input type="hidden" id="f-image-b64">
     </div>
 
     <div class="form-group">
@@ -234,6 +239,20 @@ document.addEventListener('DOMContentLoaded', () => {
   renderStats();
   renderTable();
   document.getElementById('search-posts').addEventListener('input', () => renderTable());
+
+  // Image uploader preview/b64 logic
+  document.getElementById('f-image-file').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) {
+      document.getElementById('f-image-b64').value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      document.getElementById('f-image-b64').value = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 });
 
 function renderStats() {
@@ -298,6 +317,8 @@ function showEditor(post = null) {
     document.getElementById('f-author').value = post.author;
     document.getElementById('f-date').value = post.date;
     document.getElementById('f-image').value = post.image || '';
+    document.getElementById('f-image-file').value = '';
+    document.getElementById('f-image-b64').value = '';
     document.getElementById('f-excerpt').value = post.excerpt || '';
     document.getElementById('content-editor').innerHTML = post.content;
   } else {
@@ -308,6 +329,8 @@ function showEditor(post = null) {
     document.getElementById('f-author').value = 'Torat Habayit Institute';
     document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
     document.getElementById('f-image').value = '';
+    document.getElementById('f-image-file').value = '';
+    document.getElementById('f-image-b64').value = '';
     document.getElementById('f-excerpt').value = '';
     document.getElementById('content-editor').innerHTML = '';
   }
@@ -324,12 +347,16 @@ function savePost(status) {
   const content = document.getElementById('content-editor').innerHTML.trim();
   if (!content) { alert('Please enter some content.'); return; }
 
+  const b64 = document.getElementById('f-image-b64').value;
+  const url = document.getElementById('f-image').value;
+  const finalImage = b64 ? b64 : url;
+
   const postData = {
     title,
     category: document.getElementById('f-cat').value,
     author: document.getElementById('f-author').value,
     date: document.getElementById('f-date').value,
-    image: document.getElementById('f-image').value,
+    image: finalImage,
     excerpt: document.getElementById('f-excerpt').value,
     content,
     status,
