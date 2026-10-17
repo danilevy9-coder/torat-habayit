@@ -1,0 +1,10 @@
+# Private credentials — never commit
+api/secrets.php
+
+# OS noise
+.DS_Store
+
+# Runtime blog data (created on the server by api/posts.php)
+data/posts.json
+images/uploads/*
+!images/uploads/.gitkeep

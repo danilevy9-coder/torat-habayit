@@ -5,11 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Torat Habayit Institute – The Bridge Between Medicine and Halacha</title>
   <meta name="description" content="For over three decades, the Torat Habayit Institute has guided Rabbis, physicians, and families through the most sensitive intersections of Torah law and modern medicine.">
+  <link rel="canonical" href="https://torathabayit.com/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Torat Habayit Institute">
+  <meta property="og:title" content="Torat Habayit Institute – The Bridge Between Medicine and Halacha">
+  <meta property="og:description" content="For over three decades, the Torat Habayit Institute has guided Rabbis, physicians, and families through the most sensitive intersections of Torah law and modern medicine.">
+  <meta property="og:url" content="https://torathabayit.com/">
+  <meta property="og:image" content="https://torathabayit.com/images/home/Ramat%20Gan%20Conference.jpeg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
 <div id="header-placeholder"></div>
+<noscript>
+  <nav style="padding:1rem; background:#0A192F; text-align:center; line-height:2;">
+    <a style="color:#fff; margin:0 0.6rem;" href="index.html">Home</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="about.html">About Us</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="books.html">Books</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="courses.html">Courses</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="resources.html">Resources</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="blog.html">Blog</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="gallery.html">Gallery</a>
+    <a style="color:#fff; margin:0 0.6rem;" href="contact.html">Contact</a>
+    <a style="color:#C5A059; margin:0 0.6rem;" href="donations.html">Donate</a>
+  </nav>
+</noscript>
 
 <!-- ─── Hero ─── -->
 <section class="hero">
@@ -200,15 +224,17 @@
 <script src="js/blog.js"></script>
 <script>
   // Load 3 latest posts on homepage
-  document.addEventListener('DOMContentLoaded', () => {
-    const posts = BlogStore.getPosts().filter(p => p.status === 'published').slice(0, 3);
+  document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('home-blog-posts');
-    if (container) {
-      if (posts.length === 0) {
-        container.innerHTML = '<p style="text-align:center;color:var(--gray-400);grid-column:1/-1">No posts yet — check back soon!</p>';
-      } else {
-        container.innerHTML = posts.map(renderBlogCard).join('');
-      }
+    if (!container) return;
+    const posts = (await BlogStore.getPosts()).filter(p => p.status === 'published').slice(0, 3);
+    if (posts.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:var(--gray-400);grid-column:1/-1">No posts yet — check back soon!</p>';
+    } else {
+      container.innerHTML = posts.map(renderBlogCard).join('');
+      // Re-apply translations to the freshly injected cards
+      const lang = localStorage.getItem('siteLang') || 'en';
+      if (typeof updateLanguage === 'function' && lang !== 'en') updateLanguage(lang);
     }
   });
 </script>

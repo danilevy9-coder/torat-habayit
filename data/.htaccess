@@ -1,0 +1,2 @@
+# The blog data store must never be served directly — it can contain drafts.
+Require all denied

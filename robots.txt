@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /data/
+Disallow: /phpmailer/
+
+Sitemap: https://torathabayit.com/sitemap.xml

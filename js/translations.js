@@ -283,7 +283,7 @@ const translations = {
     "donate_card_1_tit": "Standard Giving",
     "donate_card_1_sub": "Donate in NIS or USD via our secure online processor.",
     "donate_card_1_tax": "Institution Code (ניכוי מס): <strong style=\"color:var(--navy);\">45622</strong>",
-    "donate_card_1_btn": "Give via Kesherhk",
+    "donate_card_1_btn": "Give via KesherHK",
     
     "donate_card_2_tit": "USA Donors",
     "donate_card_2_sub": "Make a fully tax-deductible donation under our 501(c)(3) status.",
@@ -292,7 +292,7 @@ const translations = {
     "donate_card_2_tax": "Your donation is fully tax-deductible under IRS 501(c)(3)",
     
     "donate_card_3_tit": "Horat Keva (Israel)",
-    "donate_card_3_sub": "Set up a convenient monthly bank transfer directly to the Institute.",
+    "donate_card_3_sub": "Donate monthly by standing order (direct debit). Download the form, complete and sign it, and send it to info@torathabayit.com or by fax to 0795-740-300.",
     "donate_card_3_tax": "Institution Code: <strong style=\"color:var(--navy);\">45622</strong>",
     "donate_card_3_btn": "📄 Download Form (PDF)",
     
@@ -321,7 +321,7 @@ const translations = {
     // Books
     "book_hero_eyebrow": "Scholarship",
     "book_hero_title": "Published Works by Torat Habayit",
-    "book_hero_sub": "Over twelve volumes of rigorous Medical-Halachic research — essential references for rabbis, physicians, and scholars.",
+    "book_hero_sub": "Twelve volumes of rigorous Medical-Halachic research — essential references for rabbis, physicians, and scholars.",
     
     "book_1_eyebrow": "Volume I",
     "book_1_title": "Nutrition and Hydration in Halacha",
@@ -341,14 +341,14 @@ const translations = {
     "book_3_title": "מוות מוחי בהלכה",
     "book_3_desc1": "הגרסה העברית המקיפה של מחקר פורץ הדרך בנושא מוות מוחי ותרומת איברים על פי ההלכה. מיועד לדיינים, רבנים ואנשי רפואה הזקוקים לפסיקה הלכתית ברורה בנושאים אלו.",
     "book_3_desc2": "כולל: סקירה מקיפה של מקורות ההלכה, ניתוח הגדרות רפואיות, עמדות הפוסקים המרכזיים, ופסקי הלכה למעשה.",
-    "book_3_btn1": "Order in Israel",
-    "book_3_btn2": "International Order",
+    "book_3_btn1": "Purchase on Amazon",
+    "book_3_btn2": "Order Locally",
 
     "book_4_eyebrow": "Volume IV",
     "book_4_title": "Medicine on Chagim & Shabbat",
     "book_4_desc1": "A practical halachic guide for both patients and medical staff — covering the permissibility of medications, medical procedures, and hospital visits on Shabbat and Yom Tov. An indispensable resource for every observant Jewish home and every Jewish medical professional.",
     "book_4_desc2": "Topics include: taking medications on fast days, travelling to hospital on Yom Tov, the laws of pikuach nefesh in practice, and managing chronic conditions on Shabbat.",
-    "book_4_btn1": "Purchase on Amazon",
+    "book_4_btn1": "Purchase on Amazon (Hebrew)",
     "book_4_btn2": "Order Locally",
 
     "book_5_eyebrow": "Latest Publication",
@@ -818,7 +818,7 @@ const translations = {
     "donate_card_1_tit": "תרומה רגילה",
     "donate_card_1_sub": "תרום בשקלים או בדולרים דרך המערכת המאובטחת שלנו.",
     "donate_card_1_tax": "קוד מוסד (ניכוי מס): <strong style=\"color:var(--navy);\">45622</strong>",
-    "donate_card_1_btn": "תרומה דרך קשר (Kesherhk)",
+    "donate_card_1_btn": "תרומה דרך KesherHK",
     
     "donate_card_2_tit": "תורמים מארה\"ב",
     "donate_card_2_sub": "בצעו תרומה מוכרת למס בארה\"ב (501c3).",
@@ -827,7 +827,7 @@ const translations = {
     "donate_card_2_tax": "תרומתך מוכרת במלואה למס עפ\"י סעיף 501(c)(3) של מס ההכנסה האמריקאי",
     
     "donate_card_3_tit": "הוראת קבע (ישראל)",
-    "donate_card_3_sub": "הגדרת העברה בנקאית חודשית ונוחה ישירות למכון.",
+    "donate_card_3_sub": "תרומה חודשית בהוראת קבע: הורידו את הטופס, מלאו וחתמו, ושלחו אל info@torathabayit.com או בפקס 0795-740-300.",
     "donate_card_3_tax": "קוד מוסד: <strong style=\"color:var(--navy);\">45622</strong>",
     "donate_card_3_btn": "📄 הורד טופס (PDF)",
     
@@ -856,7 +856,7 @@ const translations = {
     // Books
     "book_hero_eyebrow": "למדנות ומחקר",
     "book_hero_title": "פרסומים מאת מכון תורת הבית",
-    "book_hero_sub": "למעלה משנים עשר כרכים של מחקר הלכתי-רפואי מעמיק — ספרי יסוד לרבנים, רופאים וחוקרים.",
+    "book_hero_sub": "שנים עשר כרכים של מחקר הלכתי-רפואי מעמיק — ספרי יסוד לרבנים, רופאים וחוקרים.",
     
     "book_1_eyebrow": "כרך א'",
     "book_1_title": "תזונה והידרציה בהלכה",
@@ -876,14 +876,14 @@ const translations = {
     "book_3_title": "מוות מוחי בהלכה",
     "book_3_desc1": "הגרסה העברית המקיפה של מחקר פורץ הדרך בנושא מוות מוחי ותרומת איברים על פי ההלכה. מיועד לדיינים, רבנים ואנשי רפואה הזקוקים לפסיקה הלכתית ברורה בנושאים אלו.",
     "book_3_desc2": "כולל: סקירה מקיפה של מקורות ההלכה, ניתוח הגדרות רפואיות, עמדות הפוסקים המרכזיים, ופסקי הלכה למעשה.",
-    "book_3_btn1": "הזמן בישראל",
-    "book_3_btn2": "הזמנה בינלאומית",
+    "book_3_btn1": "רכוש באמזון",
+    "book_3_btn2": "הזמנה מקומית",
 
     "book_4_eyebrow": "כרך ד'",
     "book_4_title": "רפואה בשבת ויום טוב",
     "book_4_desc1": "מדריך הלכתי מעשי למטופלים ולצוות הרפואי — המכסה את ההיתר לתרופות, פרוצדורות רפואיות וביקורים בבית חולים בשבת וביום טוב. משאב הכרחי לכל בית יהודי ולכל איש רפואה שומר מצוות.",
     "book_4_desc2": "הנושאים כוללים: נטילת תרופות בימי צום, נסיעה לבית חולים ביום טוב, דיני פיקוח נפש למעשה, והתמודדות עם מחלות כרוניות בשבת.",
-    "book_4_btn1": "רכוש באמזון",
+    "book_4_btn1": "רכוש באמזון (עברית)",
     "book_4_btn2": "הזמן מקומית",
 
     "book_5_eyebrow": "פרסום אחרון",

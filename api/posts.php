@@ -1,6 +1,16 @@
 <?php
+require_once __DIR__ . '/session.php';
+th_session_start();
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+
+// Writes require a server-side admin session (see auth.php).
+if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'OPTIONS'], true) && !th_is_admin()) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Authentication required']);
+    exit;
+}
 
 // Paths
 $dataDir = __DIR__ . '/../data';
@@ -95,6 +105,12 @@ function slugify($text) {
 }
 
 if ($method === 'GET') {
+    // Only the logged-in admin may see drafts.
+    if (!th_is_admin()) {
+        $posts = array_values(array_filter($posts, function ($p) {
+            return ($p['status'] ?? '') === 'published';
+        }));
+    }
     echo json_encode($posts);
 } elseif ($method === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);

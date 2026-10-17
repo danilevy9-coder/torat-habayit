@@ -17,59 +17,61 @@ header('Content-Type: application/json');
 
 // Only accept POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
-    exit;
+  http_response_code(405);
+  echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+  exit;
 }
 
 // ── Collect & sanitize fields ──
 $firstName = trim(htmlspecialchars($_POST['firstName'] ?? ''));
-$lastName  = trim(htmlspecialchars($_POST['lastName']  ?? ''));
-$email     = trim(filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL));
-$phone     = trim(htmlspecialchars($_POST['phone']   ?? ''));
-$reason    = trim(htmlspecialchars($_POST['reason']  ?? ''));
-$message   = trim(htmlspecialchars($_POST['message'] ?? ''));
-$fullName  = "$firstName $lastName";
+$lastName = trim(htmlspecialchars($_POST['lastName'] ?? ''));
+$email = trim(filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL));
+$phone = trim(htmlspecialchars($_POST['phone'] ?? ''));
+$reason = trim(htmlspecialchars($_POST['reason'] ?? ''));
+$message = trim(htmlspecialchars($_POST['message'] ?? ''));
+$fullName = "$firstName $lastName";
 
 // ── Validate required fields ──
 if (!$firstName || !$lastName || !$email || !$reason || !$message) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
-    exit;
+  http_response_code(400);
+  echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+  exit;
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Please enter a valid email address.']);
-    exit;
+  http_response_code(400);
+  echo json_encode(['success' => false, 'message' => 'Please enter a valid email address.']);
+  exit;
 }
 
-// ── SMTP Credentials (Brevo) ──
-$smtpHost     = 'smtp-relay.brevo.com';
-$smtpUser     = 'a62630001@smtp-brevo.com';
-$smtpPassword = 'YOUR_BREVO_MASTER_PASSWORD'; // ← Replace with your Brevo SMTP Master Password!
-$smtpPort     = 587;
-$fromName     = 'Torat Habayit Institute';
-$adminEmail   = 'danilevy9@gmail.com'; // ← Where inquiries arrive
+// ── SMTP credentials live in api/secrets.php (gitignored) ──
+$config = require __DIR__ . '/api/config.php';
+$smtpHost = $config['smtp_host'];
+$smtpUser = $config['smtp_user'];
+$smtpPassword = $config['smtp_password'];
+$smtpPort = $config['smtp_port'];
+$fromEmail = $config['from_email'];
+$fromName = $config['from_name'];
+$adminEmail = $config['admin_email']; // ← Where inquiries arrive
 
 // ── Send admin notification ──
 $adminMail = new PHPMailer(true);
 try {
-    $adminMail->isSMTP();
-    $adminMail->Host       = $smtpHost;
-    $adminMail->SMTPAuth   = true;
-    $adminMail->Username   = $smtpUser;
-    $adminMail->Password   = $smtpPassword;
-    $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $adminMail->Port       = $smtpPort;
-    $adminMail->CharSet    = 'UTF-8';
+  $adminMail->isSMTP();
+  $adminMail->Host = $smtpHost;
+  $adminMail->SMTPAuth = true;
+  $adminMail->Username = $smtpUser;
+  $adminMail->Password = $smtpPassword;
+  $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+  $adminMail->Port = $smtpPort;
+  $adminMail->CharSet = 'UTF-8';
 
-    $adminMail->setFrom($smtpUser, $fromName);
-    $adminMail->addAddress($adminEmail);
-    $adminMail->addReplyTo($email, $fullName); // Reply goes straight to the sender
+  $adminMail->setFrom($fromEmail, $fromName);
+  $adminMail->addAddress($adminEmail);
+  $adminMail->addReplyTo($email, $fullName); // Reply goes straight to the sender
 
-    $adminMail->isHTML(true);
-    $adminMail->Subject = "New Inquiry: $reason — $fullName";
-    $adminMail->Body = "
+  $adminMail->isHTML(true);
+  $adminMail->Subject = "New Inquiry: $reason — $fullName";
+  $adminMail->Body = "
     <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>
       <div style='background:#0A192F;padding:24px;border-radius:8px 8px 0 0;'>
         <h2 style='color:#C5A059;margin:0;font-size:20px;'>Torat Habayit Institute</h2>
@@ -96,33 +98,34 @@ try {
       </div>
     </div>";
 
-    $adminMail->AltBody = "New inquiry from $fullName\nEmail: $email\nPhone: $phone\nReason: $reason\n\nMessage:\n$message";
-    $adminMail->send();
+  $adminMail->AltBody = "New inquiry from $fullName\nEmail: $email\nPhone: $phone\nReason: $reason\n\nMessage:\n$message";
+  $adminMail->send();
 
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'SMTP ERROR: ' . $adminMail->ErrorInfo]);
-    exit;
+  error_log('Contact form SMTP error: ' . $adminMail->ErrorInfo);
+  http_response_code(500);
+  echo json_encode(['success' => false, 'message' => 'Sorry, we could not send your message right now. Please try again later or email info@torathabayit.com directly.']);
+  exit;
 }
 
 // ── Send confirmation to user ──
 $userMail = new PHPMailer(true);
 try {
-    $userMail->isSMTP();
-    $userMail->Host       = $smtpHost;
-    $userMail->SMTPAuth   = true;
-    $userMail->Username   = $smtpUser;
-    $userMail->Password   = $smtpPassword;
-    $userMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $userMail->Port       = $smtpPort;
-    $userMail->CharSet    = 'UTF-8';
+  $userMail->isSMTP();
+  $userMail->Host = $smtpHost;
+  $userMail->SMTPAuth = true;
+  $userMail->Username = $smtpUser;
+  $userMail->Password = $smtpPassword;
+  $userMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+  $userMail->Port = $smtpPort;
+  $userMail->CharSet = 'UTF-8';
 
-    $userMail->setFrom($smtpUser, $fromName);
-    $userMail->addAddress($email, $fullName);
+  $userMail->setFrom($fromEmail, $fromName);
+  $userMail->addAddress($email, $fullName);
 
-    $userMail->isHTML(true);
-    $userMail->Subject = "We received your inquiry — Torat Habayit Institute";
-    $userMail->Body = "
+  $userMail->isHTML(true);
+  $userMail->Subject = "We received your inquiry — Torat Habayit Institute";
+  $userMail->Body = "
     <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>
       <div style='background:#0A192F;padding:24px;border-radius:8px 8px 0 0;'>
         <h2 style='color:#C5A059;margin:0;font-size:20px;'>Torat Habayit Institute</h2>
@@ -145,16 +148,16 @@ try {
       </div>
     </div>";
 
-    $userMail->AltBody = "Shalom $firstName,\n\nThank you for contacting the Torat Habayit Institute. We received your inquiry and will respond within 1-2 business days.\n\nFor urgent matters:\nIsrael: 02-650-4-650\nUSA: +1-718-704-0985\n\nTorat Habayit Institute";
-    $userMail->send();
+  $userMail->AltBody = "Shalom $firstName,\n\nThank you for contacting the Torat Habayit Institute. We received your inquiry and will respond within 1-2 business days.\n\nFor urgent matters:\nIsrael: 02-650-4-650\nUSA: +1-718-704-0985\n\nTorat Habayit Institute";
+  $userMail->send();
 
 } catch (Exception $e) {
-    // Admin email already sent — don't fail the whole request
+  // Admin email already sent — don't fail the whole request
 }
 
 // ── Success ──
 echo json_encode([
-    'success' => true,
-    'message' => 'Thank you, ' . $firstName . '! Your message has been sent. We\'ll be in touch within 1–2 business days.'
+  'success' => true,
+  'message' => 'Thank you, ' . $firstName . '! Your message has been sent. We\'ll be in touch within 1–2 business days.'
 ]);
 ?>
